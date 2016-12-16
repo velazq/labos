@@ -53,6 +53,6 @@ public class Scraper {
                      .map(s -> s.replaceAll("\\D+", ""))
                      .filter(s -> !s.equals(""))
                      .map(Integer::parseInt)
-                     .collect(Collectors.toSet());
+                     .collect(Collectors.toCollection(TreeSet::new));
     }
 }
