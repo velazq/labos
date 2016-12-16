@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8">
+    <title>title</title>
+    <!--
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js"></script>
+    -->
+  </head>
+  <body>
+    <h1>Laboratorio {{lab.id}}</h1>
+    <h2>Puestos libres:</h2>
+    <ul>
+    {{#lab.freeSeats}}
+      <li>{{.}}</li>
+    {{/lab.freeSeats}}
+    </ul>
+    <h2>Puestos ocupados:</h2>
+    <ul>
+    {{#lab.usedSeats}}
+      <li>{{.}}</li>
+    {{/lab.usedSeats}}
+    </ul>
+  </body>
+</html>
