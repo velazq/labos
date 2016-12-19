@@ -7,6 +7,9 @@ import java.util.HashMap;
 import spark.ModelAndView;
 import spark.template.mustache.MustacheTemplateEngine;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import static spark.Spark.*;
 
 public class Main {
@@ -21,10 +24,11 @@ public class Main {
         Lab lab = getLab(labId);
         Map map = new HashMap();
         map.put("lab", lab);
+        map.put("test", Scraper.getHoursInfo(lab.getLabCode()).get("lunes").get(9)); // FIXME
         return new ModelAndView(map, "lab.mustache");
     }
 
-    private static Lab getLab(String labId) {
+    public static Lab getLab(String labId) {
 
         Integer id = 0;
 
