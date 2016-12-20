@@ -97,6 +97,11 @@ public class Scraper {
                     continue;
                 }
                 String txt = td.text().replace(String.valueOf((char)160), " ").trim(); // Elimina &nbsp
+                String txt1 = txt.substring(0, txt.length() / 2).trim();
+                String txt2 = txt.substring(txt.length() / 2).trim();
+                if (txt1.equals(txt2)) {
+                    txt = txt1;
+                }
                 while (tbl[d][h] != null) {
                     d++;
                 }
