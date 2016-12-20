@@ -78,55 +78,31 @@ public class Scraper {
         int numDaysTbl = days.size();
         int numHoursTbl = lab.hasHalfHours() ? hours.size() : hours.size() / 2;
 
-        Hour[][] tbl = new Hour[numDaysTbl][numHoursTbl];
-        for (int i = 0; i < numDaysTbl; i++)
-            for (int j = 0; j < numHoursTbl; j++)
-                tbl[i][j] = new Hour();
+        String[][] tbl = new String[numDaysTbl][numHoursTbl];
 
         Elements elems = doc.select("#ctl00_ContentPlaceHolder1_TabContainer1_TabPanel_1_GridViewHorario1 tr");
 
         elems.remove(0); // Quito la fila de la cabecera
         int h = 0;
-        System.out.println("ELEMS: " + elems.size()); // FIXME
         for (Element tr : elems) {
             Elements tds = tr.select("td");
-            /*
-            tds.remove(0); // Quito el primero (columna de las horas)
-            if (lab.hasHalfHours()) {
-                tds.remove(0); // Quito la columna de los minutos, si hay
-                System.out.println("x"); // FIXME
-            }
-            System.out.println("xx " + tds.size()); // FIXME
-            */
             tds.remove(tds.size() - 1); // Quito el último (sábado)
-            System.out.println("y"); // FIXME
             int d = 0;
-            System.out.println("--- " + tds.size()); // FIXME
             for (Element td : tds) {
-                if ("#94AEC6".equals(td.attr("bgcolor"))) {
+                if ("#94AEC6".equals(td.attr("bgcolor"))) { // Hora o minutos
                     continue;
                 }
-                System.out.println(td); // FIXME
-                String txt = td.text().replace(String.valueOf((char)160), "").trim(); // Para &nbsp
-                //System.out.println(d + "," + h + " --> '" + txt + "'"); // FIXME
-                while (tbl[d][h].isVisited()) {
+                String txt = td.text().replace(String.valueOf((char)160), " ").trim(); // Para &nbsp
+                while (tbl[d][h] != null) {
                     d++;
-                    System.out.println(d); // FIXME
                 }
-                if (td.attr("bgcolor").equals("White")) { // Hay clase
-                    int rowspan = 1;
-                    if (td.hasAttr("rowspan")) {
-                        rowspan = Integer.parseInt(td.attr("rowspan"));
-                    }
-                    for (int k = 0; k < rowspan; k++) {
-                        System.out.println("/// " + d + "," + (h+k) + " --> '" + txt + "'"); // FIXME
-                        tbl[d][h + k].setSubjectName(txt);
-                    }
-                } else {
-                    System.out.println("/// " + d + "," + h + " --> (vacio)"); // FIXME
-                    tbl[d][h].setEmpty();
+                int rowspan = 1;
+                if (td.hasAttr("rowspan")) {
+                    rowspan = Integer.parseInt(td.attr("rowspan"));
                 }
-                d++;
+                for (int k = 0; k < rowspan; k++) {
+                    tbl[d][h + k] = txt;
+                }
             }
             h++;
         }
@@ -137,10 +113,10 @@ public class Scraper {
             result.put(days.get(i), hrs);
             for (int j = 0; j < numHoursTbl; j++) {
                 if (lab.hasHalfHours()) {
-                    hrs.put(hours.get(j), tbl[i][j].getSubjectName());
+                    hrs.put(hours.get(j), tbl[i][j]);
                 } else {
-                    hrs.put(hours.get(j * 2), tbl[i][j].getSubjectName());
-                    hrs.put(hours.get(j * 2 + 1), tbl[i][j].getSubjectName());
+                    hrs.put(hours.get(j * 2), tbl[i][j]);
+                    hrs.put(hours.get(j * 2 + 1), tbl[i][j]);
                 }
             }
         }
