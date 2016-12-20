@@ -24,7 +24,7 @@ public class Main {
         Lab lab = getLab(labId);
         Map map = new HashMap();
         map.put("lab", lab);
-        map.put("test", Scraper.getHoursInfo(lab.getLabCode()).get("lunes").get(9)); // FIXME
+        map.put("test", Scraper.getHoursInfo(lab).get("1").get("9:00")); // FIXME
         return new ModelAndView(map, "lab.mustache");
     }
 

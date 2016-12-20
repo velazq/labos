@@ -38,6 +38,11 @@ public class Lab {
         return 0; // FIXME
     }
 
+    public boolean hasHalfHours() {
+        return id == 5 || id == 9 || id == 10 || id == 11;
+    }
+
+    /*
     public void setHoursInfo(Map<String, Map<Integer, String>> hInfo) {
         hoursInfo = hInfo;
     }
@@ -45,4 +50,5 @@ public class Lab {
     public Map<String, Map<Integer, String>> getHoursInfo() {
         return hoursInfo;
     }
+    */
 }

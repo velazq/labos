@@ -21,8 +21,6 @@ public class Scraper {
     public static final String SEATS_URL = "https://web.fdi.ucm.es/labs/estado_lab.asp";
     public static final String USAGE_URL = "https://web.fdi.ucm.es/Docencia/Horarios.aspx?AulaLab_Cod=%s&fdicurso=%s";
     public static final String TERM = "2016-2017"; // TODO: extraer a config.
-    public static final int NUM_DAYS = 7;
-    public static final int NUM_HOURS = 12;
 
     public static Map<Integer, Lab> getLabsInfo() {
         Map<Integer, Lab> info = new HashMap<>();
@@ -45,9 +43,6 @@ public class Scraper {
             lab.setFreeSeats(parseSeatsList(e1.text()));
             lab.setUsedSeats(parseSeatsList(e2.text()));
 
-            //Map<String, Map<Integer, String>> hoursInfo = getHoursInfo(lab.getLabCode());
-            //lab.setHoursInfo(hoursInfo);
-
             info.put(i + 1, lab);
         }
 
@@ -63,40 +58,60 @@ public class Scraper {
                      .collect(Collectors.toCollection(TreeSet::new));
     }
 
-    public static Map<String, Map<Integer, String>> getHoursInfo(int labCode) { // {"lunes": {10: "LP1"}
+    public static Map<String, Map<String, String>> getHoursInfo(Lab lab) { // {"1": {"9:30": "LP1"}
 
         Document doc = null;
-        String url = String.format(USAGE_URL, labCode, TERM);
-        List<String> days = Arrays.asList("lunes", "martes", "miercoles", "jueves", "viernes");
-        List<Integer> hours = Arrays.asList(9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20);
+        String url = String.format(USAGE_URL, lab.getLabCode(), TERM);
+        List<String> days = Arrays.asList("1", "2", "3", "4", "5"); // "1" => lunes
+        List<String> hours = Arrays.asList(
+             "9:00",  "9:30", "10:00", "10:30", "11:00", "11:30",
+            "12:00", "12:30", "13:00", "13:30", "14:00", "14:30",
+            "15:00", "15:30", "16:00", "16:30", "17:00", "17:30",
+            "18:00", "18:30", "19:00", "19:30", "20:00", "20:30");
 
         try {
             doc = Jsoup.connect(url).timeout(10000).get();
         } catch (IOException e) {
-            System.out.println(e.getMessage()); // FIXME
             return null; // FIXME
         }
 
-        Hour[][] tbl = new Hour[NUM_DAYS][NUM_HOURS];
-        for (int i = 0; i < days.size(); i++)
-            for (int j = 0; j < hours.size(); j++)
+        int numDaysTbl = days.size();
+        int numHoursTbl = lab.hasHalfHours() ? hours.size() : hours.size() / 2;
+
+        Hour[][] tbl = new Hour[numDaysTbl][numHoursTbl];
+        for (int i = 0; i < numDaysTbl; i++)
+            for (int j = 0; j < numHoursTbl; j++)
                 tbl[i][j] = new Hour();
 
         Elements elems = doc.select("#ctl00_ContentPlaceHolder1_TabContainer1_TabPanel_1_GridViewHorario1 tr");
 
-
         elems.remove(0); // Quito la fila de la cabecera
         int h = 0;
+        System.out.println("ELEMS: " + elems.size()); // FIXME
         for (Element tr : elems) {
             Elements tds = tr.select("td");
+            /*
             tds.remove(0); // Quito el primero (columna de las horas)
+            if (lab.hasHalfHours()) {
+                tds.remove(0); // Quito la columna de los minutos, si hay
+                System.out.println("x"); // FIXME
+            }
+            System.out.println("xx " + tds.size()); // FIXME
+            */
             tds.remove(tds.size() - 1); // Quito el último (sábado)
+            System.out.println("y"); // FIXME
             int d = 0;
+            System.out.println("--- " + tds.size()); // FIXME
             for (Element td : tds) {
-                String txt = td.text().replace(String.valueOf((char) 160), "").trim(); // Para &nbsp
-                //System.out.println(d + "," + (h+9) + " --> '" + txt + "'"); // FIXME
+                if ("#94AEC6".equals(td.attr("bgcolor"))) {
+                    continue;
+                }
+                System.out.println(td); // FIXME
+                String txt = td.text().replace(String.valueOf((char)160), "").trim(); // Para &nbsp
+                //System.out.println(d + "," + h + " --> '" + txt + "'"); // FIXME
                 while (tbl[d][h].isVisited()) {
                     d++;
+                    System.out.println(d); // FIXME
                 }
                 if (td.attr("bgcolor").equals("White")) { // Hay clase
                     int rowspan = 1;
@@ -104,9 +119,11 @@ public class Scraper {
                         rowspan = Integer.parseInt(td.attr("rowspan"));
                     }
                     for (int k = 0; k < rowspan; k++) {
+                        System.out.println("/// " + d + "," + (h+k) + " --> '" + txt + "'"); // FIXME
                         tbl[d][h + k].setSubjectName(txt);
                     }
                 } else {
+                    System.out.println("/// " + d + "," + h + " --> (vacio)"); // FIXME
                     tbl[d][h].setEmpty();
                 }
                 d++;
@@ -114,26 +131,21 @@ public class Scraper {
             h++;
         }
 
-        Map<String, Map<Integer, String>> result = new HashMap<>();
-        for (int i = 0; i < days.size(); i++) {
-            Map<Integer, String> hrs = new HashMap<>();
+        Map<String, Map<String, String>> result = new HashMap<>();
+        for (int i = 0; i < numDaysTbl; i++) {
+            Map<String, String> hrs = new HashMap<>();
             result.put(days.get(i), hrs);
-            for (int j = 0; j < hours.size(); j++) {
-                Integer key = hours.get(j);
-                String value = tbl[i][j].getSubjectName();
-                hrs.put(key, value);
+            for (int j = 0; j < numHoursTbl; j++) {
+                if (lab.hasHalfHours()) {
+                    hrs.put(hours.get(j), tbl[i][j].getSubjectName());
+                } else {
+                    hrs.put(hours.get(j * 2), tbl[i][j].getSubjectName());
+                    hrs.put(hours.get(j * 2 + 1), tbl[i][j].getSubjectName());
+                }
             }
         }
 
         return result;
     }
 
-    private static int getLabCode(int id) {
-        if (id >= 1 && id <= 10) {
-            return id + 206;
-        } else if (id == 11) {
-            return 229;
-        }
-        return 0; // FIXME
-    }
 }
