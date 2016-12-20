@@ -3,8 +3,9 @@
   <head>
     <meta charset="utf-8">
     <title>Laboratorio {{lab.id}}</title>
-    <!--
-    <link rel="stylesheet" href="style.css">
+     
+    <link rel="stylesheet" href='/bootstrap.css'>
+   <!--
     <script src="script.js"></script>
     -->
   </head>
@@ -13,16 +14,16 @@
     <h1>Laboratorio {{lab.id}}</h1>
 
     <h2>Puestos libres:</h2>
-    <ul>
+    <ul class="list-inline">
     {{#lab.freeSeats}}
       <li>{{.}}</li>
     {{/lab.freeSeats}}
     </ul>
 
     <h2>Puestos ocupados:</h2>
-    <ul>
+    <ul class="list-inline">
     {{#lab.usedSeats}}
-      <li>{{.}}</li>
+      <li class="list-inline-item">>{{.}}</li>
     {{/lab.usedSeats}}
     </ul>
 

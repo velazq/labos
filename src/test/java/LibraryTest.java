@@ -17,9 +17,9 @@ public class LibraryTest {
         //Library classUnderTest = new Library();
         //assertTrue("someLibraryMethod should return 'true'", classUnderTest.someLibraryMethod());
 
-        Lab lab = Main.getLab("1");
-        Map<String, Map<Integer, String>> h = lab.getHoursInfo();
-        System.out.println(h.get("lunes").get(9));
+//        Lab lab = Main.getLab("1");
+//        Map<String, Map<Integer, String>> h = lab.getHoursInfo();
+//        System.out.println(h.get("lunes").get(9));
 
         //Logger logger = LoggerFactory.getLogger("logger");
         //logger.error(h.get("lunes").get(9));
