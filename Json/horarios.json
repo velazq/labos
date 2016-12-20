@@ -1,0 +1,69 @@
+{"horarios":{
+	"lab1":{
+		"lunes":{//tipo 1
+			"ocupado": [
+				{"horas": "09:00-09:50", "asignatura": "EDA-2ºB"},
+				{"horas": "11:00-12:40", "asignatura": "DV(GV1ºA)"},
+				{"horas": "17:00-18:40", "asignatura": "DEV(MMii2ºA)"},
+				{"horas": "19:00-20:40", "asignatura": "ADBD(Mmii2ºA)"}
+			]
+			"libre":[
+				{"horas": "10:00-11:00"},
+				{"horas": "13:00-14:00"},
+				{"horas": "14:00-15:00"},
+				{"horas": "15:00-16:00"},
+				{"horas": "16:00-17:00"},
+			]
+		}
+		"martes":{//tipo 2
+			"horario": [
+				{"hora": "09:00-09:50", "ocupado": "si" "asignatura": "Gr-FP-1ºA"},
+				{"hora": "10:00-10:50", "ocupado": "si" "asignatura": "Gr-FP-1ºA"},
+				{"hora": "11:00-11:50", "ocupado": "si" "asignatura": "DA (GC3ºD)"},
+				{"hora": "12:00-12:50", "ocupado": "si" "asignatura": "DA (GC3ºD)"},
+				{"hora": "13:00-13:50", "ocupado": "si" "asignatura": "Gr-FP-1ºE"},
+				{"hora": "14:00-14:50", "ocupado": "si" "asignatura": "Gr-FP-1ºE"},
+				{"hora": "15:00-15:50", "ocupado": "no" "asignatura": "null"},
+				{"hora": "16:00-16:50", "ocupado": "no" "asignatura": "null"},
+				{"hora": "17:00-17:50", "ocupado": "no" "asignatura": "null"},
+				{"hora": "18:00-18:50", "ocupado": "no" "asignatura": "null"},
+				{"hora": "19:00-19:50", "ocupado": "no" "asignatura": "null"},
+				{"hora": "20:00-20:50", "ocupado": "no" "asignatura": "null"}
+			]
+		}
+		"miercoles":{//tipo 3 -> como tipo 2 pero solo poniendo horas libres u ocupadas
+			
+		}
+		"jueves":{
+			"ocupado": [
+				{"horas": "09:00-09:50", "asignatura": "EDA-2ºB"},
+				{"horas": "11:00-12:40", "asignatura": "DV(GV1ºA)"},
+				{"horas": "17:00-18:40", "asignatura": "DEV(MMii2ºA)"},
+				{"horas": "19:00-20:40", "asignatura": "ADBD(Mmii2ºA)"}
+			]
+			"libre":[
+				{"horas": "10:00-11:00"},
+				{"horas": "13:00-14:00"},
+				{"horas": "14:00-15:00"},
+				{"horas": "15:00-16:00"},
+				{"horas": "16:00-17:00"},
+			]
+		}
+		"viernes":{
+			"ocupado": [
+				{"horas": "09:00-09:50", "asignatura": "EDA-2ºB"},
+				{"horas": "11:00-12:40", "asignatura": "DV(GV1ºA)"},
+				{"horas": "17:00-18:40", "asignatura": "DEV(MMii2ºA)"},
+				{"horas": "19:00-20:40", "asignatura": "ADBD(Mmii2ºA)"}
+			]
+			"libre":[
+				{"horas": "10:00-11:00"},
+				{"horas": "13:00-14:00"},
+				{"horas": "14:00-15:00"},
+				{"horas": "15:00-16:00"},
+				{"horas": "16:00-17:00"},
+			]
+		}
+	}
+	
+}}
