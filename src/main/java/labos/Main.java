@@ -15,7 +15,7 @@ import static spark.Spark.*;
 public class Main {
 
     public static void main(String[] args) {
-    	staticFiles.location("/templates/bootstrap/css");
+    	staticFiles.location("/public");
         get("/lab/:labId", (request, result) -> showLabInfo(request.params(":labId")), new MustacheTemplateEngine());
 
     }
