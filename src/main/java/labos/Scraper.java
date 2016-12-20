@@ -58,7 +58,8 @@ public class Scraper {
                      .collect(Collectors.toCollection(TreeSet::new));
     }
 
-    public static Map<String, Map<String, String>> getHoursInfo(Lab lab) { // {"1": {"9:30": "LP1"}
+    public static Map<String, Map<String, String>> getHoursInfo(Lab lab) {
+        // {"1": {"9:30": "LP1"} => El lunes a las 9:30 hay LP1 en ese lab
 
         Document doc = null;
         String url = String.format(USAGE_URL, lab.getLabCode(), TERM);
@@ -75,14 +76,17 @@ public class Scraper {
             return null; // FIXME
         }
 
-        int numDaysTbl = days.size();
-        int numHoursTbl = lab.hasHalfHours() ? hours.size() : hours.size() / 2;
-
-        String[][] tbl = new String[numDaysTbl][numHoursTbl];
-
         Elements elems = doc.select("#ctl00_ContentPlaceHolder1_TabContainer1_TabPanel_1_GridViewHorario1 tr");
 
         elems.remove(0); // Quito la fila de la cabecera
+
+        boolean hasHalfHours = elems.size() == hours.size();
+
+        int numDaysTbl = days.size();
+        int numHoursTbl = hasHalfHours ? hours.size() : hours.size() / 2;
+
+        String[][] tbl = new String[numDaysTbl][numHoursTbl];
+
         int h = 0;
         for (Element tr : elems) {
             Elements tds = tr.select("td");
@@ -92,7 +96,7 @@ public class Scraper {
                 if ("#94AEC6".equals(td.attr("bgcolor"))) { // Hora o minutos
                     continue;
                 }
-                String txt = td.text().replace(String.valueOf((char)160), " ").trim(); // Para &nbsp
+                String txt = td.text().replace(String.valueOf((char)160), " ").trim(); // Elimina &nbsp
                 while (tbl[d][h] != null) {
                     d++;
                 }
@@ -112,7 +116,7 @@ public class Scraper {
             Map<String, String> hrs = new HashMap<>();
             result.put(days.get(i), hrs);
             for (int j = 0; j < numHoursTbl; j++) {
-                if (lab.hasHalfHours()) {
+                if (hasHalfHours) {
                     hrs.put(hours.get(j), tbl[i][j]);
                 } else {
                     hrs.put(hours.get(j * 2), tbl[i][j]);
