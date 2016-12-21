@@ -113,7 +113,7 @@ public class Scraper {
     		
     		try {
 
-    			FileWriter file = new FileWriter("Horarios.json",true);//a�ade al final si ya existe el fichero
+    			FileWriter file = new FileWriter("Horarios.json",true);//pone al final si ya existe el fichero
     			file.write(obj.toJSONString());
     			file.flush();
     			file.close();
@@ -158,7 +158,7 @@ public class Scraper {
         int h = 0;
         for (Element tr : elems) {
             Elements tds = tr.select("td");
-            tds.remove(tds.size() - 1); // Quito el último (sábado)
+            tds.remove(tds.size() - 1); // Quito el ultimo (sabado)
             int d = 0;
             for (Element td : tds) {
                 if ("#94AEC6".equals(td.attr("bgcolor"))) { // Hora o minutos

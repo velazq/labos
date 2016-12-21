@@ -16,6 +16,11 @@ public class Main {
 
     public static void main(String[] args) {
     	Scraper.iniciar();
+
+        String portStr = System.getenv("LABOS_PORT");
+        int portNum = portStr != null ? Integer.parseInt(portStr) : 4567;
+        port(portNum);
+
     	staticFiles.location("/public");    	
         get("/lab/:labId", (request, result) -> showLabInfo(request.params(":labId")), new MustacheTemplateEngine());
 
