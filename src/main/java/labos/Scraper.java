@@ -6,9 +6,8 @@ import java.util.HashMap;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.Arrays;
-
+import java.util.Collection;
 import java.util.stream.Collectors;
-
 import java.io.IOException;
 
 import org.jsoup.Jsoup;
@@ -16,12 +15,36 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import java.io.FileWriter;
+import java.util.Iterator;
+
+
+
 public class Scraper {
 
     public static final String SEATS_URL = "https://web.fdi.ucm.es/labs/estado_lab.asp";
     public static final String USAGE_URL = "https://web.fdi.ucm.es/Docencia/Horarios.aspx?AulaLab_Cod=%s&fdicurso=%s";
     public static final String TERM = "2016-2017"; // TODO: extraer a config.
-
+    
+    /*
+     * Array de booleanos inicialmente a false. Cada celda corresponde a un laboratorio
+     * y obtiene valor true una vez haya sido generado la informacion de dicho laboratorio en el json, 
+     * asi no se sobreescribe ni se repite informacion.
+     */
+    private static boolean[] jsonCreated;
+    
+    /*
+     * Inicializa el array de booleanos 
+     */
+    public static void iniciar(){
+    	jsonCreated = new boolean[12];
+    	for(int i = 0; i < jsonCreated.length; i ++)
+    		jsonCreated[i] = false;
+    }
+    
+    
     public static Map<Integer, Lab> getLabsInfo() {
         Map<Integer, Lab> info = new HashMap<>();
         Document doc = null;
@@ -56,6 +79,51 @@ public class Scraper {
                      .filter(s -> !s.equals(""))
                      .map(Integer::parseInt)
                      .collect(Collectors.toCollection(TreeSet::new));
+    }
+    
+    /*
+     * Genera los datos en el archivo Horarios.json correspondientes a lab
+     */
+    @SuppressWarnings("unchecked")
+	private static void createOrCompleteJson(Map<String,Map<String,String>> result, Lab lab){
+        	
+    		
+    		JSONObject cadena = new JSONObject();
+
+            for(int i = 1; i <= result.size(); i ++){
+    	        JSONArray horarioDia = new JSONArray();
+    	        Map<String,String> mapa = result.get(Integer.toString(i));//Obtengo el mapa de hora/asignatura para cada dia
+    	        Collection<String> values = mapa.values();//obtengo las asignaturas
+    	        Set<String> keys = mapa.keySet();//obtengo las horas
+    	        Iterator<String> it1 = keys.iterator();
+    	        Iterator<String> it2 = values.iterator();
+    	        while(it1.hasNext()){
+    	            JSONObject objeto = new JSONObject();		
+    	            objeto.put("hora", it1.next());
+    	            objeto.put("asignatura", it2.next());
+    	            horarioDia.add(objeto);
+    	        }
+    
+    			cadena.put(i, horarioDia);
+  
+            }
+            
+            JSONObject obj = new JSONObject();
+    		obj.put("Lab" + lab.id , cadena);
+    		
+    		try {
+
+    			FileWriter file = new FileWriter("Horarios.json",true);//añade al final si ya existe el fichero
+    			file.write(obj.toJSONString());
+    			file.flush();
+    			file.close();
+
+    		} catch (IOException e) {
+    			//manejar error
+    		}
+    		
+    		jsonCreated[lab.id - 1] = true;
+    	
     }
 
     public static Map<String, Map<String, String>> getHoursInfo(Lab lab) {
@@ -129,7 +197,11 @@ public class Scraper {
                 }
             }
         }
-
+        
+        if(!jsonCreated[lab.id - 1])
+        	createOrCompleteJson(result,lab);
+      
+    	
         return result;
     }
 
