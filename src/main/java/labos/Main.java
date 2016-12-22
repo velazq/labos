@@ -20,6 +20,7 @@ public class Main {
         String portStr = System.getenv("LABOS_PORT");
         int portNum = portStr != null ? Integer.parseInt(portStr) : 4567;
         port(portNum);
+        ipAddress("localhost");
 
     	staticFiles.location("/public");    	
         get("/lab/:labId", (request, result) -> showLabInfo(request.params(":labId")), new MustacheTemplateEngine());
