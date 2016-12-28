@@ -1,0 +1,62 @@
+
+.logo-ucm{
+	padding: 0 !important ;
+}
+
+header a p{
+	color: white;
+	font-size: 20px;
+	line-height: center;
+	padding-top: 25px;
+}
+header img{
+	float: right;
+	padding-bottom: 15px;
+	padding-top: 15px;
+}
+
+.nav-menu ul, ol {
+	list-style:none;
+}
+			
+.nav-menu > li {
+	float:left;
+	list-style: none;
+}
+			
+.nav-menu li a {
+	background-color:#000;
+	color:#fff;
+	text-decoration:none;
+	padding:10px 12px;
+	
+	margin-top: 5px;
+	margin-right: 5px;
+	float: left;
+
+}
+			
+.nav-menu li a:hover {
+	background-color:#434343;
+}
+			
+.nav-menu li ul {
+	display:none;
+	position:absolute;
+	min-width:140px;
+}
+			
+.nav-menu li:hover > ul {
+	display:block;
+}
+
+.nav-menu li ul li {
+	position:relative;
+	float: left;
+}
+
+.nav-menu li ul li ul {
+	right:-140px;
+	top:0px;
+
+}
