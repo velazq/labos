@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.stream.Collectors;
 import java.io.IOException;
@@ -125,11 +126,29 @@ public class Scraper {
     		jsonCreated[lab.id - 1] = true;
     	
     }
+    
+    private static Elements seleccionarPorFecha(Document doc){
+        Calendar c = Calendar.getInstance();
+        int mes = c.get(Calendar.MONTH);
+        if((mes > 7) && (mes < 11))
+        	return doc.select("#ctl00_ContentPlaceHolder1_TabContainer1_TabPanel_1_GridViewHorario1 tr");
+        if(mes == 11 || mes < 2){
+        	return doc.select("#ctl00_ContentPlaceHolder1_TabContainer1_body").size() == 0 ? 
+        		   doc.select("#ctl00_ContentPlaceHolder1_TabContainer1_TabPanel_1_GridViewHorario1 tr") : 
+        		   doc.select("#ctl00_ContentPlaceHolder1_TabContainer1_TabPanel_12_CwGridViewHorario_C1");
+        }
+        if(mes > 1 && mes < 7)
+        	return doc.select("#ctl00_ContentPlaceHolder1_TabContainer1_TabPanel_12_CwGridViewHorario_C2");
+        else
+        	return null;
+    }
 
     public static Map<String, Map<String, String>> getHoursInfo(Lab lab) {
         // {"1": {"9:30": "LP1"} => El lunes a las 9:30 hay LP1 en ese lab
 
         Document doc = null;
+       
+
         String url = String.format(USAGE_URL, lab.getLabCode(), TERM);
         List<String> days = Arrays.asList("1", "2", "3", "4", "5"); // "1" => lunes
         List<String> hours = Arrays.asList(
@@ -144,19 +163,19 @@ public class Scraper {
             return null; // FIXME
         }
 
-        Elements elems = doc.select("#ctl00_ContentPlaceHolder1_TabContainer1_ClientState");
-
-        elems.remove(0); // Quito la fila de la cabecera
+        Elements elems = seleccionarPorFecha(doc); //tbody
+        Elements elemsTr = elems.select("tr");
+        elemsTr.remove(0); // Quito la fila de la cabecera
 
         boolean hasHalfHours = elems.size() == hours.size();
 
         int numDaysTbl = days.size();
         int numHoursTbl = hasHalfHours ? hours.size() : hours.size() / 2;
-
+        
         String[][] tbl = new String[numDaysTbl][numHoursTbl];
 
         int h = 0;
-        for (Element tr : elems) {
+        for (Element tr : elemsTr) {
             Elements tds = tr.select("td");
             tds.remove(tds.size() - 1); // Quito el ultimo (sabado)
             int d = 0;
