@@ -144,7 +144,7 @@ public class Scraper {
             return null; // FIXME
         }
 
-        Elements elems = doc.select("#ctl00_ContentPlaceHolder1_TabContainer1_TabPanel_1_GridViewHorario1 tr");
+        Elements elems = doc.select("#ctl00_ContentPlaceHolder1_TabContainer1_ClientState");
 
         elems.remove(0); // Quito la fila de la cabecera
 
