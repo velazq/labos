@@ -26,8 +26,12 @@
       <li class="list-inline-item">>{{.}}</li>
     {{/lab.usedSeats}}
     </ul>
-
-    <p>En este laboratorio, el lunes a las 9 hay "{{test}}"</p>
+    {{#isTest}}
+    	<p>En este laboratorio, el {{dia}} a las {{hora}} hay "{{test}}"</p>
+	{{/isTest}}
+	{{^isTest}}
+		<p>El laboratorio esta libre</p>
+	{{/isTest}}
 
   </body>
 </html>

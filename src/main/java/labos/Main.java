@@ -2,6 +2,11 @@ package labos;
 
 import java.util.Set;
 import java.util.Map;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 
 import spark.ModelAndView;
@@ -27,15 +32,71 @@ public class Main {
 
     }
 
-    private static ModelAndView showLabInfo(String labId) {
-        
-    	
-    	Lab lab = getLab(labId);
-        Map map = new HashMap();
-        map.put("lab", lab);
-        map.put("test", Scraper.getHoursInfo(lab).get("1").get("9:00")); // FIXME
-        return new ModelAndView(map, "lab.mustache");
-    }
+	private static ModelAndView showLabInfo(String labId) {
+
+		Lab lab = getLab(labId);
+		Map map = new HashMap();
+		map.put("lab", lab);
+		String test = Scraper.getHoursInfo(lab).get(CurrentDay()).get(CurrentDate());
+		if (test == null)
+			map.put("isTest", false);
+		else {
+			map.put("test", test);
+			map.put("isTest", true);
+		}
+		map.put("hora", CurrentDate());
+		map.put("dia", realDay(CurrentDay()));
+		return new ModelAndView(map, "lab.mustache");
+	}
+
+	private static String realDay(String currentDay) {
+		String day = null;
+		switch (currentDay) {
+		case "1":
+			day = "Lunes";
+			break;
+		case "2":
+			day = "Martes";
+			break;
+		case "3":
+			day = "Miercoles";
+			break;
+		case "4":
+			day = "Jueves";
+			break;
+		case "5":
+			day = "Viernes";
+			break;
+		case "6":
+			day = "Sábado";
+			break;
+		case "7":
+			day = "Domingo";
+			break;
+		default:
+			break;
+		}
+		return day;
+	}
+
+	private static String CurrentDate() {
+		// Coge la hora actual
+		Date date = new Date();
+		DateFormat hourFormat = new SimpleDateFormat("HH:mm");
+		return hourFormat.format(date);
+	}
+
+	private static String CurrentDay() {
+		// Viene Domingo = 1 Lunes = 2... Y para nosotros es Lunes = 1 Martes =
+		// 2...
+		Date date = new Date();
+		GregorianCalendar cal = new GregorianCalendar();
+		cal.setTime(date);
+		if (cal.get(Calendar.DAY_OF_WEEK) == 1)
+			return "7";
+		else
+			return String.valueOf(cal.get(Calendar.DAY_OF_WEEK) - 1);
+	}
 
     public static Lab getLab(String labId) {
 
