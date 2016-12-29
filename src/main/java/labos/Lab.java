@@ -7,7 +7,7 @@ import java.util.Map;
 public class Lab {
     public int id; // 'public' para Mustache
     public Set<Integer> freeSeats, usedSeats;
-    public Map<String, Map<Integer, String>> hoursInfo;
+    public Map<String, Map<String, String>> hoursInfo; //{"1": {"9:30": "LP1"}
 
     public Lab(int labId) {
         id = labId;
@@ -38,13 +38,14 @@ public class Lab {
         return 0; // FIXME
     }
 
-    /*
-    public void setHoursInfo(Map<String, Map<Integer, String>> hInfo) {
+    
+    public void setHoursInfo(Map<String, Map<String, String>> hInfo) {
         hoursInfo = hInfo;
     }
+    
 
-    public Map<String, Map<Integer, String>> getHoursInfo() {
+    public Map<String, Map<String, String>> getHoursInfo() {
         return hoursInfo;
     }
-    */
+    
 }
