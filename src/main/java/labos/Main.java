@@ -30,6 +30,9 @@ public class Main {
     	staticFiles.location("/public");    	
         get("/lab/:labId", (request, result) -> showLabInfo(request.params(":labId")), new MustacheTemplateEngine());
 
+		Ctrl ctrl = new Ctrl();
+		get("/api/availability", (req, res) -> ctrl.getLabsInfoJSON());
+		get("/api/timetable", (req, res) -> ctrl.getTimetableJSON());
     }
 
 	private static ModelAndView showLabInfo(String labId) {
@@ -68,7 +71,7 @@ public class Main {
 			day = "Viernes";
 			break;
 		case "6":
-			day = "Sábado";
+			day = "Sï¿½bado";
 			break;
 		case "7":
 			day = "Domingo";
