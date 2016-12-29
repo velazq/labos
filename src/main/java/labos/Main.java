@@ -1,6 +1,5 @@
 package labos;
 
-import java.util.Set;
 import java.util.Map;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -11,9 +10,6 @@ import java.util.HashMap;
 
 import spark.ModelAndView;
 import spark.template.mustache.MustacheTemplateEngine;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import static spark.Spark.*;
 
@@ -26,7 +22,6 @@ public class Main {
         int portNum = portStr != null ? Integer.parseInt(portStr) : 4567;
         port(portNum);
         ipAddress("localhost");
-
     	staticFiles.location("/public");    	
         get("/lab/:labId", (request, result) -> showLabInfo(request.params(":labId")), new MustacheTemplateEngine());
 
@@ -37,7 +32,7 @@ public class Main {
 		Lab lab = getLab(labId);
 		Map map = new HashMap();
 		map.put("lab", lab);
-		String test = Scraper.getHoursInfo(lab).get(CurrentDay()).get(CurrentDate());
+		String test = lab.getHoursInfo().get(CurrentDay()).get(CurrentDate());
 		if (test == null)
 			map.put("isTest", false);
 		else {
@@ -108,13 +103,16 @@ public class Main {
             notFound("<html><body><h1>404: el labo '" + id + "' no existe</h1></body></html>");
         }
 
-        Lab lab = Scraper.getLabsInfo().get(id);
-
-        if (lab == null) {
-            notFound("<html><body><h1>404: el labo '" + id + "' no existe</h1></body></html>");
+       // Lab lab = Scraper.getLabsInfo().get(id);
+        if(id <= 0 || id > Scraper.laboratorios.length){
+        	 notFound("<html><body><h1>404: el labo '" + id + "' no existe</h1></body></html>");
+        	 return null;
         }
+//        if (lab == null) {
+//            notFound("<html><body><h1>404: el labo '" + id + "' no existe</h1></body></html>");
+//        }
 
-        return lab;
+        return Scraper.laboratorios[id - 1];
     }
 
 }

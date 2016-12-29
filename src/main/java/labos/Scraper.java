@@ -29,48 +29,49 @@ public class Scraper {
     public static final String USAGE_URL = "https://web.fdi.ucm.es/Docencia/Horarios.aspx?AulaLab_Cod=%s&fdicurso=%s";
     public static final String TERM = "2016-2017"; // TODO: extraer a config.
     
-    /*
-     * Array de booleanos inicialmente a false. Cada celda corresponde a un laboratorio
-     * y obtiene valor true una vez haya sido generado la informacion de dicho laboratorio en el json, 
-     * asi no se sobreescribe ni se repite informacion.
-     */
-    private static boolean[] jsonCreated;
+    public static Lab[] laboratorios = new Lab[11];//cada celda representa uno de los laboratorios y contiene su informacion
+    
+    
     
     /*
-     * Inicializa el array de booleanos 
+     * Inicializa el array de laboratorios
      */
     public static void iniciar(){
-    	jsonCreated = new boolean[12];
-    	for(int i = 0; i < jsonCreated.length; i ++)
-    		jsonCreated[i] = false;
+    	for(int i = 0;i < laboratorios.length;i ++){
+    		laboratorios[i] = new Lab(i + 1);
+    		Scraper.getLabsInfo(laboratorios[i]);
+    		Scraper.getHoursInfo(laboratorios[i]);
+    	}
+    	
+    	createJson();
+
     }
     
     
-    public static Map<Integer, Lab> getLabsInfo() {
-        Map<Integer, Lab> info = new HashMap<>();
+    public static void getLabsInfo(Lab lab) {
+        //Map<Integer, Lab> info = new HashMap<>();
         Document doc = null;
 
         try {
             doc = Jsoup.connect(SEATS_URL).get();
         } catch (IOException e) {
-            return info; // FIXME
+            //return info; // FIXME
         }
 
         Elements free = doc.select(".tabla font[color='#006F00']");
         Elements used = doc.select(".tabla font[color='#FF0000']");
+        //for (int i = 0; i < free.size(); i++) {
+        Element e1 = free.get(lab.id - 1);
+        Element e2 = used.get(lab.id - 1);
 
-        for (int i = 0; i < free.size(); i++) {
-            Element e1 = free.get(i);
-            Element e2 = used.get(i);
+        // Lab lab = new Lab(i + 1);
+        lab.setFreeSeats(parseSeatsList(e1.text()));
+        lab.setUsedSeats(parseSeatsList(e2.text()));
 
-            Lab lab = new Lab(i + 1);
-            lab.setFreeSeats(parseSeatsList(e1.text()));
-            lab.setUsedSeats(parseSeatsList(e2.text()));
+            //info.put(i + 1, lab);
+        //}
 
-            info.put(i + 1, lab);
-        }
-
-        return info;
+       //return info;
     }
 
     private static Set<Integer> parseSeatsList(String str) {
@@ -83,38 +84,40 @@ public class Scraper {
     }
     
     /*
-     * Genera los datos en el archivo Horarios.json correspondientes a lab
+     * Genera los datos en el archivo Horarios.json correspondientes a cada lab
+     * 
      */
-    @SuppressWarnings("unchecked")
-	private static void createOrCompleteJson(Map<String,Map<String,String>> result, Lab lab){
+	private static void createJson(){
         	
     		
-    		JSONObject cadena = new JSONObject();
-
-            for(int i = 1; i <= result.size(); i ++){
-    	        JSONArray horarioDia = new JSONArray();
-    	        Map<String,String> mapa = result.get(Integer.toString(i));//Obtengo el mapa de hora/asignatura para cada dia
-    	        Collection<String> values = mapa.values();//obtengo las asignaturas
-    	        Set<String> keys = mapa.keySet();//obtengo las horas
-    	        Iterator<String> it1 = keys.iterator();
-    	        Iterator<String> it2 = values.iterator();
-    	        while(it1.hasNext()){
-    	            JSONObject objeto = new JSONObject();		
-    	            objeto.put("hora", it1.next());
-    	            objeto.put("asignatura", it2.next());
-    	            horarioDia.add(objeto);
-    	        }
-    
-    			cadena.put(i, horarioDia);
-  
-            }
-            
-            JSONObject obj = new JSONObject();
-    		obj.put("Lab" + lab.id , cadena);
     		
+    		JSONObject obj = new JSONObject();
+    		for(int j = 0;j < laboratorios.length; j++){
+    			JSONObject cadena = new JSONObject();
+    			Map<String,Map<String,String>> result = laboratorios[j].getHoursInfo();
+	            for(int i = 1; i <= result.size(); i ++){
+	    	        JSONArray horarioDia = new JSONArray();
+	    	        Map<String,String> mapa = result.get(Integer.toString(i));//Obtengo el mapa de hora/asignatura para cada dia
+	    	        Collection<String> values = mapa.values();//obtengo las asignaturas
+	    	        Set<String> keys = mapa.keySet();//obtengo las horas
+	    	        Iterator<String> it1 = keys.iterator();
+	    	        Iterator<String> it2 = values.iterator();
+	    	        while(it1.hasNext()){
+	    	            JSONObject objeto = new JSONObject();		
+	    	            objeto.put("hora", it1.next());
+	    	            objeto.put("asignatura", it2.next());
+	    	            horarioDia.add(objeto);
+	    	        }
+	    
+	    			cadena.put(i, horarioDia);
+	  
+	            }
+            
+	    		obj.put("Lab" + laboratorios[j].id , cadena);
+			}
     		try {
 
-    			FileWriter file = new FileWriter("Horarios.json",true);//pone al final si ya existe el fichero
+    			FileWriter file = new FileWriter("Horarios.json");//pone al final si ya existe el fichero
     			file.write(obj.toJSONString());
     			file.flush();
     			file.close();
@@ -123,7 +126,34 @@ public class Scraper {
     			//manejar error
     		}
     		
-    		jsonCreated[lab.id - 1] = true;
+    		//jsonCreated[lab.id - 1] = true;
+    		
+    		
+//    		JSONParser parser = new JSONParser();
+//    		 
+//            try {
+//     
+//                Object objeto = parser.parse(new FileReader(
+//                        "C:\\Users\\usuario1\\workspaceNeon\\Labos\\Horarios.json"));
+//     
+//                JSONObject jsonObject = (JSONObject) objeto;
+//                JSONObject lab1 = (JSONObject) jsonObject.get("Lab2");
+//                JSONArray lunes = (JSONArray) lab1.get("1");  
+//                Iterator<JSONObject> iterator = lunes.iterator();
+//                while (iterator.hasNext()) {
+//                	JSONObject eoo = iterator.next();
+//                    System.out.println(eoo.get("asignatura"));
+//                    System.out.println(eoo.get("hora"));
+//                }
+//     
+//     
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
+        
+    		
+    		
+    		
     	
     }
     
@@ -143,11 +173,10 @@ public class Scraper {
         	return null;
     }
 
-    public static Map<String, Map<String, String>> getHoursInfo(Lab lab) {
+    public static void getHoursInfo(Lab lab) {
         // {"1": {"9:30": "LP1"} => El lunes a las 9:30 hay LP1 en ese lab
 
         Document doc = null;
-       
 
         String url = String.format(USAGE_URL, lab.getLabCode(), TERM);
         List<String> days = Arrays.asList("1", "2", "3", "4", "5"); // "1" => lunes
@@ -160,14 +189,14 @@ public class Scraper {
         try {
             doc = Jsoup.connect(url).timeout(10000).get();
         } catch (IOException e) {
-            return null; // FIXME
+            //return null; // FIXME
         }
 
         Elements elems = seleccionarPorFecha(doc); //tbody
         Elements elemsTr = elems.select("tr");
         elemsTr.remove(0); // Quito la fila de la cabecera
 
-        boolean hasHalfHours = elems.size() == hours.size();
+        boolean hasHalfHours = elemsTr.size() == hours.size();
 
         int numDaysTbl = days.size();
         int numHoursTbl = hasHalfHours ? hours.size() : hours.size() / 2;
@@ -189,6 +218,7 @@ public class Scraper {
                 if (txt1.equals(txt2)) {
                     txt = txt1;
                 }
+                
                 while (tbl[d][h] != null) {
                     d++;
                 }
@@ -217,11 +247,8 @@ public class Scraper {
             }
         }
         
-        if(!jsonCreated[lab.id - 1])
-        	createOrCompleteJson(result,lab);
+        lab.setHoursInfo(result);
       
-    	
-        return result;
     }
 
 }
