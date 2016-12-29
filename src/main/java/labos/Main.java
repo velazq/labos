@@ -111,7 +111,7 @@ public class Main {
 //        if (lab == null) {
 //            notFound("<html><body><h1>404: el labo '" + id + "' no existe</h1></body></html>");
 //        }
-
+        Scraper.getLabsInfo(Scraper.laboratorios[id - 1]);
         return Scraper.laboratorios[id - 1];
     }
 
