@@ -14,8 +14,7 @@ public class Ctrl {
 
     public String getLabsInfoJSON() {
         JSONObject obj = new JSONObject();
-        Map<Integer, Lab> info = Scraper.getLabsInfo();
-        for (Map.Entry<Integer, Lab> entry : Scraper.getLabsInfo().entrySet()) {
+        for (Map.Entry<Integer, Lab> entry : dao.getLabsInfo().entrySet()) {
             String labName = "lab" + entry.getKey();
             Lab lab = entry.getValue();
             JSONObject labJSON = new JSONObject();
