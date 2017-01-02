@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.HashMap;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collection;
@@ -90,26 +91,26 @@ public class Scraper {
 	private static void createJson(){
         	
     		
-    		
     		JSONObject obj = new JSONObject();
     		for(int j = 0;j < laboratorios.length; j++){
+    			
     			JSONObject cadena = new JSONObject();
     			Map<String,Map<String,String>> result = laboratorios[j].getHoursInfo();
+    			
 	            for(int i = 1; i <= result.size(); i ++){
-	    	        JSONArray horarioDia = new JSONArray();
+	            	
+	        		JSONObject objeto = new JSONObject();
 	    	        Map<String,String> mapa = result.get(Integer.toString(i));//Obtengo el mapa de hora/asignatura para cada dia
 	    	        Collection<String> values = mapa.values();//obtengo las asignaturas
 	    	        Set<String> keys = mapa.keySet();//obtengo las horas
 	    	        Iterator<String> it1 = keys.iterator();
 	    	        Iterator<String> it2 = values.iterator();
-	    	        while(it1.hasNext()){
-	    	            JSONObject objeto = new JSONObject();		
-	    	            objeto.put("hora", it1.next());
-	    	            objeto.put("asignatura", it2.next());
-	    	            horarioDia.add(objeto);
-	    	        }
+	    	        
+	    	        while(it1.hasNext())
+	    	            objeto.put(it1.next(),it2.next());
+	    	        
 	    
-	    			cadena.put(i, horarioDia);
+	    			cadena.put(i, objeto);
 	  
 	            }
             
