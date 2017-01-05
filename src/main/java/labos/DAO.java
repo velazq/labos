@@ -13,6 +13,9 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
 
 public class DAO {
 
@@ -22,7 +25,12 @@ public class DAO {
 
     public DAO() {
         // TODO: Cargamos el JSON de los horarios (y del software)
-        timetableJSON = "{\"lab1\":{\"1\":{\"9:00\":\"EDA\",\"9:30\":\"EDA\",\"10:00\":\"\"},\"2\":{\"9:00\":\"AW\",\"9:30\":\"AW\",\"10:00\":\"AW\"},\"3\":{\"9:00\":\"\",\"9:30\":\"\",\"10:00\":\"X\"}}}";
+        // timetableJSON = "{\"lab1\":{\"1\":{\"9:00\":\"EDA\",\"9:30\":\"EDA\",\"10:00\":\"\"},\"2\":{\"9:00\":\"AW\",\"9:30\":\"AW\",\"10:00\":\"AW\"},\"3\":{\"9:00\":\"\",\"9:30\":\"\",\"10:00\":\"X\"}}}";
+        try {
+            timetableJSON = new String(Files.readAllBytes(Paths.get("Horarios.json")));
+        } catch (IOException e) {
+            
+        }
     }
 
     public String getTimetableJSON() {

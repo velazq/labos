@@ -23,10 +23,10 @@ public class Main {
         port(portNum);
         ipAddress("localhost");
 
-    	staticFiles.location("/public"); 
-		
+    	staticFiles.location("/public");
+
 		enableCORS("*", "*", "*");
-		   	
+
         get("/lab/:labId", (request, result) -> showLabInfo(request.params(":labId")), new MustacheTemplateEngine());
 
 		Ctrl ctrl = new Ctrl();

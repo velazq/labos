@@ -1,13 +1,17 @@
 $(function () {
 
-    // var availabilityURL = "/api/availability";
-    // var timetableURL = "/api/timetable";
+    //var availabilityURL = "/api/availability";
+    //var timetableURL = "/api/timetable";
     var availabilityURL = "http://localhost:4567/api/availability";
     var timetableURL = "http://localhost:4567/api/timetable";
 
     var allLabNumbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
 
     var timetable = "";
+
+    $.getJSON(timetableURL, function (data) { // Preload timetable
+        timetable = data;
+    });
 
     function showCurrentAvailability(labNums) {
         var lNums = labNums;

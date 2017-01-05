@@ -29,11 +29,11 @@ public class Scraper {
     public static final String SEATS_URL = "https://web.fdi.ucm.es/labs/estado_lab.asp";
     public static final String USAGE_URL = "https://web.fdi.ucm.es/Docencia/Horarios.aspx?AulaLab_Cod=%s&fdicurso=%s";
     public static final String TERM = "2016-2017"; // TODO: extraer a config.
-    
+
     public static Lab[] laboratorios = new Lab[11];//cada celda representa uno de los laboratorios y contiene su informacion
-    
-    
-    
+
+
+
     /*
      * Inicializa el array de laboratorios
      */
@@ -43,12 +43,12 @@ public class Scraper {
     		Scraper.getLabsInfo(laboratorios[i]);
     		Scraper.getHoursInfo(laboratorios[i]);
     	}
-    	
+
     	createJson();
 
     }
-    
-    
+
+
     public static void getLabsInfo(Lab lab) {
         //Map<Integer, Lab> info = new HashMap<>();
         Document doc = null;
@@ -83,38 +83,38 @@ public class Scraper {
                      .map(Integer::parseInt)
                      .collect(Collectors.toCollection(TreeSet::new));
     }
-    
+
     /*
      * Genera los datos en el archivo Horarios.json correspondientes a cada lab
-     * 
+     *
      */
 	private static void createJson(){
-        	
-    		
+
+
     		JSONObject obj = new JSONObject();
     		for(int j = 0;j < laboratorios.length; j++){
-    			
+
     			JSONObject cadena = new JSONObject();
     			Map<String,Map<String,String>> result = laboratorios[j].getHoursInfo();
-    			
+
 	            for(int i = 1; i <= result.size(); i ++){
-	            	
+
 	        		JSONObject objeto = new JSONObject();
 	    	        Map<String,String> mapa = result.get(Integer.toString(i));//Obtengo el mapa de hora/asignatura para cada dia
 	    	        Collection<String> values = mapa.values();//obtengo las asignaturas
 	    	        Set<String> keys = mapa.keySet();//obtengo las horas
 	    	        Iterator<String> it1 = keys.iterator();
 	    	        Iterator<String> it2 = values.iterator();
-	    	        
+
 	    	        while(it1.hasNext())
 	    	            objeto.put(it1.next(),it2.next());
-	    	        
-	    
+
+
 	    			cadena.put(i, objeto);
-	  
+
 	            }
-            
-	    		obj.put("Lab" + laboratorios[j].id , cadena);
+
+	    		obj.put("lab" + laboratorios[j].id , cadena);
 			}
     		try {
 
@@ -126,46 +126,46 @@ public class Scraper {
     		} catch (IOException e) {
     			//manejar error
     		}
-    		
+
     		//jsonCreated[lab.id - 1] = true;
-    		
-    		
+
+
 //    		JSONParser parser = new JSONParser();
-//    		 
+//
 //            try {
-//     
+//
 //                Object objeto = parser.parse(new FileReader(
 //                        "C:\\Users\\usuario1\\workspaceNeon\\Labos\\Horarios.json"));
-//     
+//
 //                JSONObject jsonObject = (JSONObject) objeto;
 //                JSONObject lab1 = (JSONObject) jsonObject.get("Lab2");
-//                JSONArray lunes = (JSONArray) lab1.get("1");  
+//                JSONArray lunes = (JSONArray) lab1.get("1");
 //                Iterator<JSONObject> iterator = lunes.iterator();
 //                while (iterator.hasNext()) {
 //                	JSONObject eoo = iterator.next();
 //                    System.out.println(eoo.get("asignatura"));
 //                    System.out.println(eoo.get("hora"));
 //                }
-//     
-//     
+//
+//
 //            } catch (Exception e) {
 //                e.printStackTrace();
 //            }
-        
-    		
-    		
-    		
-    	
+
+
+
+
+
     }
-    
+
     private static Elements seleccionarPorFecha(Document doc){
         Calendar c = Calendar.getInstance();
         int mes = c.get(Calendar.MONTH);
         if((mes > 7) && (mes < 11))
         	return doc.select("#ctl00_ContentPlaceHolder1_TabContainer1_TabPanel_1_GridViewHorario1 tr");
         if(mes == 11 || mes < 2){
-        	return doc.select("#ctl00_ContentPlaceHolder1_TabContainer1_body").size() == 0 ? 
-        		   doc.select("#ctl00_ContentPlaceHolder1_TabContainer1_TabPanel_1_GridViewHorario1 tr") : 
+        	return doc.select("#ctl00_ContentPlaceHolder1_TabContainer1_body").size() == 0 ?
+        		   doc.select("#ctl00_ContentPlaceHolder1_TabContainer1_TabPanel_1_GridViewHorario1 tr") :
         		   doc.select("#ctl00_ContentPlaceHolder1_TabContainer1_TabPanel_12_CwGridViewHorario_C1");
         }
         if(mes > 1 && mes < 7)
@@ -201,7 +201,7 @@ public class Scraper {
 
         int numDaysTbl = days.size();
         int numHoursTbl = hasHalfHours ? hours.size() : hours.size() / 2;
-        
+
         String[][] tbl = new String[numDaysTbl][numHoursTbl];
 
         int h = 0;
@@ -219,7 +219,7 @@ public class Scraper {
                 if (txt1.equals(txt2)) {
                     txt = txt1;
                 }
-                
+
                 while (tbl[d][h] != null) {
                     d++;
                 }
@@ -247,9 +247,9 @@ public class Scraper {
                 }
             }
         }
-        
+
         lab.setHoursInfo(result);
-      
+
     }
 
 }
