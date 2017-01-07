@@ -60,3 +60,20 @@ header img{
 	top:0px;
 
 }
+
+.panel{
+	margin-left: 30px; 
+	margin-right: 30px;
+	margin-top: 20px;
+	
+}
+
+.panel p{
+	font-size: 15px;
+	font-family: arial;
+	margin-bottom: 0px;
+}
+
+.btn-cerrar{
+	border-radius: 5px;
+}

@@ -1,17 +1,13 @@
 $(function () {
 
-    //var availabilityURL = "/api/availability";
-    //var timetableURL = "/api/timetable";
+    // var availabilityURL = "/api/availability";
+    // var timetableURL = "/api/timetable";
     var availabilityURL = "http://localhost:4567/api/availability";
     var timetableURL = "http://localhost:4567/api/timetable";
 
     var allLabNumbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
 
     var timetable = "";
-
-    $.getJSON(timetableURL, function (data) { // Preload timetable
-        timetable = data;
-    });
 
     function showCurrentAvailability(labNums) {
         var lNums = labNums;
@@ -30,7 +26,7 @@ $(function () {
     }
 
     function hideCurrentAvailability() {
-        $("#availability").html("");
+        $("#availability").html("");3
     }
 
     function showTimetableEntry(labNums, weekday, hour, minutes) {
@@ -87,7 +83,15 @@ $(function () {
     function showDateInfo(weekday, hour, minutes) {
         var timeSlice = "" + hour + ":" + minutes;
         var days = ["domingo", "lunes", "martes", "miércoles", "jueves", "viernes", "sábado"];
-        $("#dateInfo").html("<h3>Visualizando el horario del " + days[weekday] + " en la franja de las " + timeSlice + "</h3>");
+        /*  <p class="panel-title">Visualizando el horario del lunes en la franja de las 9:00
+            <i><button onclick="ocultar()" type="button" class="close" aria-hidden="true">&times;</button></i>
+            </p>*/
+
+        var i = "<i><button onclick= \"ocultar()\" type=\"button\" class=\"close\" aria-hidden=\"true\">&times;</button></i>";    
+        var p = "<p class=\"panel-title\"> Visualizando el horario del " + days[weekday] + " en la franja de las " + timeSlice + "\n" + i + "</p>";
+        
+
+        $("#dateInfo").html(p);
     }
 
     function hideDateInfo() {
@@ -100,7 +104,7 @@ $(function () {
         if (labNumIdx !== 0) {
             labNums = [labNumIdx];
         }
-        var weekday = $("#sel2 option:selected").index() + 1;
+        var weekday = $("#sel2 option:selected").index()+1;
         var hourTxt = $("#sel3 option:selected").text();
         var hour = "" + parseInt(hourTxt);
         var minutes = $("#sel4 option:selected").text();
@@ -115,4 +119,7 @@ $(function () {
     showDateInfo(d.weekday, d.hour, d.minutes);
     showCurrentAvailability();
 
+
+
 });
+

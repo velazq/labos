@@ -119,15 +119,24 @@
 							</div>
 							<div class="form-group">
 								  <select class="form-control" id="sel5">
-									<option selected>Adobe</option>
+									<option selected>adobe</option>
 									<option>Máquinas virtuales</option>
 									<option>Eclipse</option>
 									<option>Xilinx</option>
 								  </select>
 							</div>
-							 <button type="submit" class="btn btn-default">Buscar</button>
+							<button onclick="mostrar()" type="button" class="btn btn-default" aria-hidden="true">Buscar</button>
 							</form>
-						                        
+                            <div class="panel panel-default" id="panel-principal"> 
+                                <div id="dateInfo" class="panel-heading">                                      
+                                </div>
+                                <div class="panel-body" style="color: black; ">
+                                    <div id="availability">                       
+                                    </div>
+                                    <div id="timetable">
+                                    </div>
+                                </div>	  
+                            </div>			                        
                     </div>
                 </div>
             </div>
@@ -147,11 +156,23 @@
     </section>
 
     
+    <script type="text/javascript">
+        function ocultar(){
+            document.getElementById('panel-principal').style.display = 'none';
+        }
+        function mostrar(){
+            document.getElementById('panel-principal').style.display = 'block';
+        }
 
+    </script>
+    
+    
+    <!-- jQuery -->
+    <script src="/js/jquery.js"></script>
+    <script src="vendor/jquery/jquery.js"></script>
+    <script src="/js/aplab.js"></script>
     
 
-    <!-- jQuery -->
-    <script src="vendor/jquery/jquery.js"></script>
 
     <!-- Bootstrap Core JavaScript -->
     <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
