@@ -22,14 +22,12 @@ public class DAO {
     public static final String SEATS_URL = "https://web.fdi.ucm.es/labs/estado_lab.asp";
 
     private String timetableJSON;
-    private String softwareJSON;
 
     public DAO() {
         // TODO: Cargamos el JSON de los horarios (y del software)
         // timetableJSON = "{\"lab1\":{\"1\":{\"9:00\":\"EDA\",\"9:30\":\"EDA\",\"10:00\":\"\"},\"2\":{\"9:00\":\"AW\",\"9:30\":\"AW\",\"10:00\":\"AW\"},\"3\":{\"9:00\":\"\",\"9:30\":\"\",\"10:00\":\"X\"}}}";
         try {
             timetableJSON = new String(Files.readAllBytes(Paths.get("Horarios.json")));
-            softwareJSON = new String(Files.readAllBytes(Paths.get("Programas.json")));
         } catch (IOException e) {
             
         }
@@ -37,10 +35,6 @@ public class DAO {
 
     public String getTimetableJSON() {
         return timetableJSON;
-    }
-    
-    public String getSoftwareJSON(){
-    	return softwareJSON;
     }
     
     public Map<Integer, Lab> getLabsInfo() {

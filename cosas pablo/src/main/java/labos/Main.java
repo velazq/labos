@@ -32,8 +32,6 @@ public class Main {
 		Ctrl ctrl = new Ctrl();
 		
 		get("/api/timetable", (req, res) -> ctrl.getTimetableJSON());
-		get("/api/software", (req, res) -> ctrl.getSoftwareJSON());
-
 		while(true){
 			get("/api/availability", (req, res) -> ctrl.getLabsInfoJSON());
 			try {

@@ -119,39 +119,39 @@
 							:
 							<div class="form-group">
 								  <select class="form-control" id="sel4">
-									<option selected>--</option>
-									<option>00</option>
+									<option selected>00</option>
 									<option>30</option>
 								  </select>
 							</div>
 							<div class="form-group">
 								  <select class="form-control" id="sel5">
-									<option selected>adobe</option>
-									<option>Máquinas virtuales</option>
-									<option>Eclipse</option>
-									<option>Xilinx</option>
+									<option selected>Ninguno</option>
+									<option>Adobe</option>
+									<option>MySql</option>
+									<option>MongoDB</option>
+									<option>Subversion</option>
 								  </select>
 							</div>
 							<input type="button" onclick="mostrar()" type="button" class="btn btn-default" id="boton" value="Buscar" aria-expanded="true" >
 							</form>
 							
-							<div id="panel-principal1" style="display : block;" > 
-                                    <div class = "disponibilidad"> 
-                                    Disponibilidad de laboratorios actual                                     
-                                    </div>
-                                    <div align="center">
-                                        <div id=availability>
-                                        </div>
-                                    </div>    
+							<div class="panel panel-success" id="panel-principal1" style="display : block;" > 
+	                                <div  class="panel-heading" > 
+	                                Disponibilidad de laboratorios actual                                     
+	                                </div>
+	                                <div class="panel-body" style="color: black;" align="center">
+	                                    <div id=availability>
+	                                    </div>
+	                                </div>	  
                             </div>
-                            <div id="panel-principal2" style="display : none;" > 
-                                <div id="dateInfo">                                   
-                                </div>
-                                <div align="center">
-                                    <div id="timetable">
-                                    </div>
-                                </div>    
-                            </div>
+	                        <div class="panel panel-success" id="panel-principal2" style="display : none;" > 
+	                        	<div id="dateInfo" class="panel-heading" >                                      
+	                            </div>
+	                            <div class="panel-body" style="color: black;" align="center">
+	                            	<div id="timetable">
+	                                </div>
+	                            </div>	  
+	                        </div>
 	                         	                        
                     </div>
                 </div>
@@ -172,7 +172,7 @@
     </section>
 
     
-    <!--<script type="text/javascript">
+    <script type="text/javascript">
         
         function mostrar(){
 			if(document.getElementById('panel-principal2').style.display == 'none'){
@@ -186,35 +186,13 @@
 			}
         }
 
-    </script>-->
+    </script>
     
     
     <!-- jQuery -->
     <script src="/js/jquery.js"></script>
     <script src="vendor/jquery/jquery.js"></script>
     <script src="/js/aplab.js"></script>
-
-    <script type="text/javascript">
-        $( "#boton" ).click(function() {
-
-            if(document.getElementById('panel-principal2').style.display == 'none'){
-                document.getElementById('panel-principal1').style.display ='none';
-                 $( "#panel-principal2" ).slideToggle( "slow", function() {
-                    // Animation complete.
-                  });
-                document.getElementById('boton').value = 'Ocultar';
-            }else{
-                $( "#panel-principal1" ).slideToggle( "slow", function() {
-                    // Animation complete.
-                  });
-                document.getElementById('panel-principal2').style.display = 'none';
-                document.getElementById('boton').value = 'Buscar';
-            }
-
-
-        });
-    </script>
-
     
 
 

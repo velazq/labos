@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8">
+    <title>Laboratorio {{lab.id}}</title>
+     
+    <link rel="stylesheet" href='/css/bootstrap.css'>
+   <!--
+    <script src="script.js"></script>
+    -->
+  </head>
+  <body>
+
+    <h1>Laboratorio {{lab.id}}</h1>
+
+    <h2>Puestos libres:</h2>
+    <ul class="list-inline">
+    {{#lab.freeSeats}}
+      <li>{{.}}</li>
+    {{/lab.freeSeats}}
+    </ul>
+
+    <h2>Puestos ocupados:</h2>
+    <ul class="list-inline">
+    {{#lab.usedSeats}}
+      <li class="list-inline-item">>{{.}}</li>
+    {{/lab.usedSeats}}
+    </ul>
+    {{#isTest}}
+    	<p>En este laboratorio, el {{dia}} a las {{hora}} hay "{{test}}"</p>
+	{{/isTest}}
+	{{^isTest}}
+		<p>El laboratorio esta libre</p>
+	{{/isTest}}
+
+  </body>
+</html>

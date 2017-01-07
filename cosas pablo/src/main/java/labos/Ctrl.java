@@ -32,15 +32,9 @@ public class Ctrl {
         }
         return obj.toJSONString();
     }
-    
-    public String getSoftwareJSON() {
-		return dao.getSoftwareJSON();
-	}
-   
+
     public String getTimetableJSON() {
         return dao.getTimetableJSON();
     }
-
-	
 
 }
