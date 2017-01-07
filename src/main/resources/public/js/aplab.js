@@ -9,6 +9,11 @@ $(function () {
 
     var timetable = "";
 
+    $.getJSON(timetableURL, function (data) { // Preload timetable
+        timetable = data;
+    });
+
+
     function showCurrentAvailability(labNums) {
         var lNums = labNums;
         if (labNums === undefined || labNums === null) {
