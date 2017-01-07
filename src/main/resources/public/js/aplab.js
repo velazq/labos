@@ -30,9 +30,9 @@ $(function () {
         });
     }
 
-//    function hideCurrentAvailability() {
-//        $("#availability").html("");
-//    }
+    function hideCurrentAvailability() {
+        $("#availability").html("");3
+    }
 
     function showTimetableEntry(labNums, weekday, hour, minutes) {
         if (labNums === null) {
@@ -91,9 +91,7 @@ $(function () {
         /*  <p class="panel-title">Visualizando el horario del lunes en la franja de las 9:00
             <i><button onclick="ocultar()" type="button" class="close" aria-hidden="true">&times;</button></i>
             </p>*/
-
-        var i = "<i><button onclick= \"ocultar()\" type=\"button\" class=\"close\" aria-hidden=\"true\">&times;</button></i>";    
-        var p = "<p class=\"panel-title\"> Visualizando el horario del " + days[weekday] + " en la franja de las " + timeSlice + "\n" + i + "</p>";
+        var p = "<p> Visualizando el horario del " + days[weekday] + " en la franja de las " + timeSlice  + " </p>";
         
 
         $("#dateInfo").html(p);
@@ -115,7 +113,7 @@ $(function () {
         var minutes = $("#sel4 option:selected").text();
         showDateInfo(weekday, hour, minutes);
         showTimetableEntry(labNums, weekday, hour, minutes);
-        //hideCurrentAvailability();
+        hideCurrentAvailability();
     }
 
     $(".form-control").change(refresh);
