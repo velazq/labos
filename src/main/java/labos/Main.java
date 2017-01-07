@@ -30,8 +30,17 @@ public class Main {
         get("/lab/:labId", (request, result) -> showLabInfo(request.params(":labId")), new MustacheTemplateEngine());
 
 		Ctrl ctrl = new Ctrl();
-		get("/api/availability", (req, res) -> ctrl.getLabsInfoJSON());
+		
 		get("/api/timetable", (req, res) -> ctrl.getTimetableJSON());
+		while(true){
+			get("/api/availability", (req, res) -> ctrl.getLabsInfoJSON());
+			try {
+				Thread.sleep(30000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
     }
 
 	// Enables CORS on requests. This method is an initialization method and should be called once.

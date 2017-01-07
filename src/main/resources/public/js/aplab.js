@@ -30,9 +30,9 @@ $(function () {
         });
     }
 
-    function hideCurrentAvailability() {
-        $("#availability").html("");3
-    }
+//    function hideCurrentAvailability() {
+//        $("#availability").html("");
+//    }
 
     function showTimetableEntry(labNums, weekday, hour, minutes) {
         if (labNums === null) {
@@ -115,7 +115,7 @@ $(function () {
         var minutes = $("#sel4 option:selected").text();
         showDateInfo(weekday, hour, minutes);
         showTimetableEntry(labNums, weekday, hour, minutes);
-        hideCurrentAvailability();
+        //hideCurrentAvailability();
     }
 
     $(".form-control").change(refresh);
