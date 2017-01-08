@@ -17,6 +17,9 @@ $(function () {
     $.getJSON(timetableURL, function (data) { // Preload timetable
         timetable = data;
     });
+    $.getJSON(softwareURL, function (data) { // Preload timetable
+        software = data;
+    });
 
 
     function showCurrentAvailability(labNums) {
@@ -43,7 +46,7 @@ $(function () {
         if (labNums === null) {
             labNums = allLabNumbers;
         }
-        function refreshTimetable(data) {
+        function refreshTimetable(data,soft) {
             timetable = data;
             var txt = "";
             for (var i = 0; i < labNums.length; i++) {
@@ -51,60 +54,109 @@ $(function () {
                 var labTag = "lab" + labNum;
                 if (labTag in data) {
                     var lab = data[labTag];
-                    var wday = "" + weekday;
-                    if (wday in lab) {
-                        var dayClasses = lab[wday];
-                        if(hour == "Todas"){
-                        	var x;
-                        	for(x = 0; x < allHours.length;x ++){
-                        		var j;
-                        		for(j = 0; j < mins.length; j++){
-                        			var hora = "" + allHours[x] + ":" + mins[j];
-                        			if (hora in dayClasses) {
-		                        		if (dayClasses[hora] !== "") {
-			                              txt += "<p>En el laboratorio " + labNum + " hay " + 
-			                              dayClasses[hora] + " a las " + allHours[i] + ":" + 
-			                              mins[j] + "</p>";
-			                            } else {
-			                                txt += "<p>En el laboratorio " + labNum + " no hay clase a las " + hora + "</p>";
-			                            }
+                    if(softwareData == "Ninguno"){
+                    	getClasses();
+                    }else{
+                    	if(softwareData in soft){
+                    		var swf = soft[softwareData];
+                    		var numLab = "" + labNum;
+                    		if(numLab in swf){
+                    			var so = swf[numlab];
+                            	getClasses(so);
+                    		} else {
+                                txt += "<p>El laboratorio " + numLab + " no tiene " + softwareData + " </p>";
 
-                        			}else{
-                        				txt += "<p>No existe horario conocido para la hora solicitada</p>";
-                        			}
-                        		}
-                        	}
-                        	
-                        } else {
-                        	var time = "" + hour + ":" + minutes;
-	                        if (time in dayClasses) {
-				                            if (dayClasses[time] !== "") {
-				                                txt += "<p>En el laboratorio " + labNum + " hay " + dayClasses[time] + "</p>";
-				                            } else {
-				                                txt += "<p>En el laboratorio " + labNum + " no hay clase en esta franja horaria</p>";
-				                            }
-		                           
-	                        }  else {
-		                            txt += "<p>Esta hora está fuera del horario del laboratorio " + labNum + "</p>";
-		                    }    
-	                       
-                        }
-	                        
-	                        
-                    } else {
-                        txt += "<p>No tenemos el horario del laboratorio " + labNum + " para el día de la semana indicado</p>";
+                    		}
+                    		
+                    	} else {
+                            txt += "<p>No tenemos registro del software " + softwareData + " </p>";
+
+                    	}
                     }
                 } else {
                     txt += "<p>No tenemos los horarios del laboratorio " + labNum + "</p>";
                 }
+                
+                function getClasses(sistema){
+	                    var wday = "" + weekday;
+	                    if (wday in lab) {
+	                        var dayClasses = lab[wday];
+	                        if(hour == "Todas"){
+	                        	var x;
+	                        	for(x = 0; x < allHours.length;x ++){
+	                        		var j;
+	                        		for(j = 0; j < mins.length; j++){
+	                        			var hora = "" + allHours[x] + ":" + mins[j];
+	                        			if (hora in dayClasses) {
+			                        		if (dayClasses[hora] !== "") {
+
+				                              txt += "<p>En el laboratorio " + labNum + " hay " + 
+				                              dayClasses[hora] + " a las " + hora + " " + parserSO(sistema) + "</p>";
+				                              
+				                              
+				                            } else {
+				                                txt += "<p>En el laboratorio " + labNum + " no hay clase a las " + hora + " " + parserSO(sistema) + "</p>";
+				                            }
+	
+	                        			}else{
+	                        				txt += "<p>No existe horario conocido para la hora solicitada</p>";
+	                        			}
+	                        		}
+	                        	}
+	                        	
+	                        } else {
+	                        	var time = "" + hour + ":" + minutes;
+		                        if (time in dayClasses) {
+					                            if (dayClasses[time] !== "") {
+					                                txt += "<p>En el laboratorio " + labNum + " hay " + dayClasses[time] + "</p>";
+					                            } else {
+					                                txt += "<p>En el laboratorio " + labNum + " no hay clase en esta franja horaria</p>";
+					                            }
+			                           
+		                        }  else {
+			                            txt += "<p>Esta hora está fuera del horario del laboratorio " + labNum + "</p>";
+			                    }    
+		                       
+	                        }
+		                        
+		                        
+	                    } else {
+	                        txt += "<p>No tenemos el horario del laboratorio " + labNum + " para el día de la semana indicado</p>";
+	                    }
+	                    
+                }
+                
+                function parserSO(sisOp){
+                    if (sisOP === undefined || sisOP === null) {
+                    	return "";
+                    } else {
+                    	switch(sisOP){
+                    		case "L": return "(S.O: Linux)"; break;
+                    		case "W": return "(S.O: Windows)"; break;
+                    		case "LW": return "(S.O: Lin/Win)"; break;
+                    		default: break;
+                    	}
+                    	
+                    }
+                }
+                    
+                
             }
             $("#timetable").html(txt);
         }
-        if (timetable === "") {
-        	$.getJSON(timetableURL,refreshTimetable);
+        if (timetable === "" || software === "") {
+        	$.getJSON(timetableURL, function (data) { // Preload timetable
+                timetable = data;
+            });
+            $.getJSON(softwareURL, function (data) { // Preload timetable
+                software = data;
+            });
+            
+            refreshTimetable(timetable,software);
+
 
         }else{
-        	refreshTimetable(timetable);
+        	refreshTimetable(timetable,software);
         }
         
     }
@@ -126,14 +178,15 @@ $(function () {
             <i><button onclick="ocultar()" type="button" class="close" aria-hidden="true">&times;</button></i>
             </p>*/
 
-        var i = "<i><button onclick= \"ocultar()\" type=\"button\" class=\"close\" aria-hidden=\"true\">&times;</button></i>";    
         if(hour == "Todas"){
-        	var p = "<p class=\"panel-title\"> Visualizando el horario del " + days[weekday]  + "\n" + i + "</p>";
+        	var p = "<p> Visualizando el horario del " + days[weekday]  + "\n</p>";
 
         }else{
-        	var p = "<p class=\"panel-title\"> Visualizando el horario del " + days[weekday] + " en la franja de las " + timeSlice + "\n" + i + "</p>";
+        	var p = "<p> Visualizando el horario del " + days[weekday] + " en la franja de las " + timeSlice + "\n</p>";
 
         }
+                
+
 
         $("#dateInfo").html(p);
     }
@@ -157,14 +210,16 @@ $(function () {
         }
         var minutes = $("#sel4 option:selected").text();
         var soft = $("#sel5 option:selected").text();
-        alert(soft);
         showDateInfo(weekday, hour, minutes);
         showTimetableEntry(labNums, weekday, hour, minutes,soft);
-        //hideCurrentAvailability();
+//        hideCurrentAvailability();
     }
+    
 
     $(".form-control").change(refresh);
+    
 
+    
     var d = getDateInfo();
     showDateInfo(d.weekday, d.hour, d.minutes);
     showCurrentAvailability();

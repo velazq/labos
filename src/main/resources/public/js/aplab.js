@@ -38,9 +38,9 @@ $(function () {
         });
     }
 
-    function hideCurrentAvailability() {
-        $("#availability").html("");
-    }
+//    function hideCurrentAvailability() {
+//        $("#availability").html("");
+//    }
 
     function showTimetableEntry(labNums, weekday, hour, minutes,softwareData) {
         if (labNums === null) {
@@ -89,10 +89,11 @@ $(function () {
 	                        			if (hora in dayClasses) {
 			                        		if (dayClasses[hora] !== "") {
 				                              txt += "<p>En el laboratorio " + labNum + " hay " + 
-				                              dayClasses[hora] + " a las " + allHours[i] + ":" + 
-				                              mins[j] + "</p>";
+				                              dayClasses[hora] + " a las " + hora + "</p>";
+				                              
+				                              
 				                            } else {
-				                                txt += "<p>En el laboratorio " + labNum + " no hay clase a las " + hora + "</p>";
+				                                txt += "<p>En el laboratorio " + labNum + " no hay clase a las " + hora +"</p>";
 				                            }
 	
 	                        			}else{
@@ -122,7 +123,20 @@ $(function () {
 	                    }
 	                    
                 }
-                    
+                
+//                function parserSO(sisOp){
+//                    if (sisOp === undefined || sisOp === null) {
+//                    	return "";
+//                    } else {
+//                    	switch(sisOp){
+//                    		case "L": return "(S.O: Linux)"; 
+//                    		case "W": return "(S.O: Windows)"; 
+//                    		case "LW": return "(S.O: Lin/Win)"; 
+//                    	}
+//                    	
+//                    }
+//                }
+//                    
                 
             }
             $("#timetable").html(txt);
@@ -197,9 +211,12 @@ $(function () {
         showTimetableEntry(labNums, weekday, hour, minutes,soft);
 //        hideCurrentAvailability();
     }
+    
 
     $(".form-control").change(refresh);
+    
 
+    
     var d = getDateInfo();
     showDateInfo(d.weekday, d.hour, d.minutes);
     showCurrentAvailability();

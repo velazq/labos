@@ -119,11 +119,15 @@ header img{
 	padding: 5px;
 	margin-bottom: 5px;
 }
+
+#timetable {
+	max-height: 300px;
+	overflow-y: auto;
+}
  
 #timetable p{
 	font-size: 15px;
 	text-align: center;
 	margin-bottom: 0;
-	margin-top: 0;
-	
+	margin-top: 0;	
 }

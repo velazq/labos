@@ -77,3 +77,57 @@ header img{
 .btn-cerrar{
 	border-radius: 5px;
 }
+
+#panel-principal1{
+	font-family: arial;
+	margin-top: 10px;
+	background-color:rgba(192,192,192,0.3);
+	margin-left: 5%;
+	margin-right: 5%;
+	border-radius: 8px;
+}
+
+.disponibilidad{
+	background-color:rgba(192,192,192,0.6);
+	border-radius: 8px;
+	font-size: 20px;
+	padding: 5px;
+	margin-bottom: 5px;
+}
+ 
+#availability p{
+	font-size: 15px !important;
+	text-align: center;
+	margin-bottom: 0;
+	
+}
+
+
+#panel-principal2{
+	font-family: arial;
+	margin-top: 10px;
+	background-color:rgba(192,192,192,0.3);
+	margin-left: 5%;
+	margin-right: 5%;
+	border-radius: 8px;
+}
+
+#dateInfo p{
+	background-color:rgba(192,192,192,0.6);
+	border-radius: 8px;
+	font-size: 20px;
+	padding: 5px;
+	margin-bottom: 5px;
+}
+
+#timetable {
+	max-height: 300px;
+	overflow-y: auto;
+}
+ 
+#timetable p{
+	font-size: 15px;
+	text-align: center;
+	margin-bottom: 0;
+	margin-top: 0;	
+}
