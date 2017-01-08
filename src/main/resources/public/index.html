@@ -132,26 +132,26 @@
 									<option>Subversion</option>
 								  </select>
 							</div>
-							<input type="button" onclick="mostrar()" type="button" class="btn btn-default" id="boton" value="Buscar" aria-expanded="true" >
+							<input type="button" type="button" class="btn btn-default" id="boton" value="Buscar" aria-expanded="true" >
 							</form>
 							
-							<div class="panel panel-success" id="panel-principal1" style="display : block;" > 
-	                                <div  class="panel-heading" > 
-	                                Disponibilidad de laboratorios actual                                     
-	                                </div>
-	                                <div class="panel-body" style="color: black;" align="center">
-	                                    <div id=availability>
-	                                    </div>
-	                                </div>	  
+							<div id="panel-principal1" style="display : block;" > 
+                                    <div class = "disponibilidad"> 
+                                    Disponibilidad de laboratorios actual                                     
+                                    </div>
+                                    <div align="center">
+                                        <div id=availability>
+                                        </div>
+                                    </div>    
                             </div>
-	                        <div class="panel panel-success" id="panel-principal2" style="display : none;" > 
-	                        	<div id="dateInfo" class="panel-heading" >                                      
-	                            </div>
-	                            <div class="panel-body" style="color: black;" align="center">
-	                            	<div id="timetable">
-	                                </div>
-	                            </div>	  
-	                        </div>
+                            <div id="panel-principal2" style="display : none;" > 
+                                <div id="dateInfo">                                   
+                                </div>
+                                <div align="center">
+                                    <div id="timetable">
+                                    </div>
+                                </div>    
+                            </div>
 	                         	                        
                     </div>
                 </div>
@@ -169,32 +169,33 @@
                 <p>Trabajo final de ELP, código disponibles en <a href="https://github.com/velazq/labos"> GitHub</a> y más información en <a href="http://wikis.fdi.ucm.es/ELP/Trabajo:Aplab,_servicio_para_comprobar_disponibilidad_de_los_laboratorios">Wiki APPLAB</a></p>
             </div>
         </div>
-    </section>
-
-    
-    <script type="text/javascript">
-        
-        function mostrar(){
-			if(document.getElementById('panel-principal2').style.display == 'none'){
-				document.getElementById('panel-principal1').style.display ='none';
-				document.getElementById('panel-principal2').style.display = 'block';
-				document.getElementById('boton').value = 'Ocultar';
-			}else{
-				document.getElementById('panel-principal1').style.display ='block';
-				document.getElementById('panel-principal2').style.display = 'none';
-				document.getElementById('boton').value = 'Buscar';
-			}
-        }
-
-    </script>
-    
+    </section>    
     
     <!-- jQuery -->
     <script src="/js/jquery.js"></script>
     <script src="vendor/jquery/jquery.js"></script>
     <script src="/js/aplab.js"></script>
     
+	    <script type="text/javascript">
+        $( "#boton" ).click(function() {
 
+            if(document.getElementById('panel-principal2').style.display == 'none'){
+                document.getElementById('panel-principal1').style.display ='none';
+                 $( "#panel-principal2" ).slideToggle( "slow", function() {
+                    // Animation complete.
+                  });
+                document.getElementById('boton').value = 'Ocultar';
+            }else{
+                $( "#panel-principal1" ).slideToggle( "slow", function() {
+                    // Animation complete.
+                  });
+                document.getElementById('panel-principal2').style.display = 'none';
+                document.getElementById('boton').value = 'Buscar';
+            }
+
+
+        });
+    </script>
 
     <!-- Bootstrap Core JavaScript -->
     <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
