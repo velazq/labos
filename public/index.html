@@ -185,36 +185,6 @@
     <script src="/js/jquery.js"></script>
     <script src="vendor/jquery/jquery.js"></script>
     <script src="/js/aplab.js"></script>
-    
-	    <script type="text/javascript">
-	        $("#boton").click(function() {
-	
-	            if(document.getElementById('panel-principal2').style.display == 'none'){
-	                document.getElementById('panel-principal1').style.display ='none';
-	                 $( "#panel-principal2" ).slideToggle( "slow", function() {
-	                    // Animation complete.
-	                  });
-	                document.getElementById('boton').value = 'Ocultar';
-	            }else{
-	                $( "#panel-principal1" ).slideToggle( "slow", function() {
-	                    // Animation complete.
-	                  });
-	                document.getElementById('panel-principal2').style.display = 'none';
-	                document.getElementById('boton').value = 'Buscar';
-	            }
-	
-			   
-	        });
-	        
-	        
-	        $("#sel3").change(function(){
-	        	if(document.getElementById('sel3').value !== '--'){
-	        		document.getElementById('sel4').disabled = false;
-	        	} else {
-	        		document.getElementById('sel4').disabled = true;
-	        	}
-	        });
-    </script>
 
     <!-- Bootstrap Core JavaScript -->
     <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
