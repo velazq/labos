@@ -39,6 +39,7 @@ $(function() {
 						});
 				document.getElementById('panel-principal2').style.display = 'none';
 				document.getElementById('boton').value = 'Buscar';
+				showCurrentAvailability();
 			}
 
 	});
@@ -59,6 +60,9 @@ $(function() {
 	showCurrentAvailability();
 
 	function showCurrentAvailability(labNums) {
+		
+		$("#availability").html("");
+		
 		var lNums = labNums;
 		if (labNums === undefined || labNums === null) {
 			lNums = allLabNumbers;
@@ -74,7 +78,10 @@ $(function() {
 			$("#availability").html(txt);
 		});
 	}
-
+	
+	function hideCurrentAvailability(){
+        $("#availability").html("");
+    }
 	function showTimetableEntry(labNums, weekday, hour, minutes, softwareData) {
 		if (labNums === null) {
 			labNums = allLabNumbers;
@@ -263,6 +270,7 @@ $(function() {
 		var soft = $("#sel5 option:selected").text();
 		showDateInfo(weekday, hour, minutes);
 		showTimetableEntry(labNums, weekday, hour, minutes, soft);
+//		hideCurrentAvailability();
 	}
 
 });
