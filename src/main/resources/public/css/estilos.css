@@ -85,6 +85,7 @@ header img{
 	margin-left: 5%;
 	margin-right: 5%;
 	border-radius: 8px;
+	min-height: 307px;
 }
 
 .disponibilidad{
@@ -130,4 +131,8 @@ header img{
 	text-align: center;
 	margin-bottom: 0;
 	margin-top: 0;	
+}
+
+div label input{
+	margin-left: 0%;
 }

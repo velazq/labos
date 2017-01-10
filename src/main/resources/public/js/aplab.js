@@ -52,8 +52,16 @@ $(function() {
 			document.getElementById('sel4').selectedIndex = "0";
 		}
 	});
-
+	
+	$("#checkbox").change(refresh);
 	$(".form-control").change(refresh);
+
+	
+	$(document).ready(function(){
+		   var refreshId = setInterval(showCurrentAvailability, 30000);//refrescar el numero de puestos libres cada 30 segundos
+		   $.ajaxSetup({ cache: false });
+	});
+
 
 	var d = getDateInfo();
 	showDateInfo(d.weekday, d.hour, d.minutes);
@@ -82,7 +90,7 @@ $(function() {
 	function hideCurrentAvailability(){
         $("#availability").html("");
     }
-	function showTimetableEntry(labNums, weekday, hour, minutes, softwareData) {
+	function showTimetableEntry(labNums, weekday, hour, minutes, softwareData,freeHours) {
 		if (labNums === null) {
 			labNums = allLabNumbers;
 		}
@@ -148,11 +156,14 @@ $(function() {
 									var hora = "" + allHours[x] + ":" + mins[j];
 									if (hora in dayClasses) {
 										if (dayClasses[hora] !== "") {
-											txt += "<p>En el <b>laboratorio "
+											if(freeHours == "unchecked"){
+												txt += "<p>En el <b>laboratorio "
 													+ labNum + "</b> hay "
 													+ dayClasses[hora]
 													+ " a las " + hora + " "
 													+ parseo + "</p>";
+												
+											} 
 										} else {
 											txt += "<p>En el <b>laboratorio "
 													+ labNum
@@ -252,6 +263,15 @@ $(function() {
 	function hideDateInfo() {
 		$("#dateInfo").html("");
 	}
+	
+	function checkboxValue() {
+		if(document.getElementById('checkbox').checked == true) {
+			return "checked";
+		} else {
+			return "unchecked";
+		}
+
+	}
 
 	function refresh() {
 		var labNumIdx = $("#sel1 option:selected").index();
@@ -268,8 +288,9 @@ $(function() {
 		}
 		var minutes = $("#sel4 option:selected").text();
 		var soft = $("#sel5 option:selected").text();
+		var free = checkboxValue();
 		showDateInfo(weekday, hour, minutes);
-		showTimetableEntry(labNums, weekday, hour, minutes, soft);
+		showTimetableEntry(labNums, weekday, hour, minutes, soft,free);
 //		hideCurrentAvailability();
 	}
 
