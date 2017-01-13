@@ -83,8 +83,8 @@ $(function() {
 				txt += "<p>En el <b>laboratorio " + labNum + "</b> hay "
 						+ lab.free.length + " puestos libres</p>"
 			}
-			$("#availability").html("");
-
+			hideCurrentAvailability();
+			
 			$("#availability").html(txt);
 		});
 	}
