@@ -70,7 +70,6 @@ $(function() {
 
 	function showCurrentAvailability(labNums) {
 		
-		$("#availability").html("");
 		
 		var lNums = labNums;
 		if (labNums === undefined || labNums === null) {
@@ -84,6 +83,8 @@ $(function() {
 				txt += "<p>En el <b>laboratorio " + labNum + "</b> hay "
 						+ lab.free.length + " puestos libres</p>"
 			}
+			$("#availability").html("");
+
 			$("#availability").html(txt);
 		});
 	}
