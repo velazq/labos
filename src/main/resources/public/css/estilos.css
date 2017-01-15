@@ -89,18 +89,25 @@ header img{
 }
 
 .disponibilidad{
-	background-color:rgba(192,192,192,1);
+	background-color:#374c5d;
 	border-radius: 8px;
 	font-size: 20px;
 	padding: 5px;
-	margin-bottom: 5px;
 }
  
 #availability p{
-	font-size: 15px !important;
+	font-size: 15px;
 	text-align: center;
 	margin-bottom: 0;
-	
+	border: #374c5d;
+    border-style: solid;
+    border-width: 1px;
+}
+#availability p:hover{
+	border: #05f6ff;;
+	border-style: solid;
+    border-width: 1px;
+	font-size: 16px;
 }
 
 
@@ -114,11 +121,12 @@ header img{
 }
 
 #dateInfo p{
-	background-color:rgba(192,192,192,1);
+	background-color:#374c5d;
 	border-radius: 8px;
 	font-size: 20px;
 	padding: 5px;
-	margin-bottom: 5px;
+	margin-bottom:0px;
+	
 }
 
 #timetable {
@@ -135,7 +143,7 @@ header img{
 }
  
 #timetable::-webkit-scrollbar-thumb {
-  background-color: rgba(192,192,192,1);
+  background-color: #374c5d;
   outline: 1px solid slategrey;
 }
  
@@ -144,7 +152,16 @@ header img{
 	text-align: center;
 	margin-bottom: 0;
 	margin-top: 0;	
+	border: #374c5d;
+    border-style: solid;
+    border-width: 1px;
 }
+#timetable p:hover{
+	border: #05f6ff;;
+	border-style: solid;
+    border-width: 1px;
+	font-size: 16px;
+ }
 
 div label input{
 	margin-left: 0%;
