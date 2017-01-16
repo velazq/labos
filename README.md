@@ -3,18 +3,19 @@
 ##Synopsis
 Proyecto final de la asignatura Ética, Legislación y Profesión de la Facultad de Informática - UCM.  
 APLAB permite conocer la disponibilidad de los laboratorios de FDI realizando filtrados por dia, hora, asignatura y software disponible.  
-Para ello se recolecta datos mediante scraping de dos páginas webs de FDI 
+Para ello se recolecta datos mediante scraping de dos páginas webs de 
 [estado](https://web.fdi.ucm.es/labs/estado_lab.asp) y [horarios](https://web.fdi.ucm.es/Docencia/Horarios.aspx?AulaLab_Cod=%s&fdicurso=%s)
 de los laboratorios.
 
 ##Code Example
 
+Se hace uso de scraping para recolectar la información y de archivo JSON para almancenarla.
 
 
 *Bucle For principal de la clase Scraper*
 
 ``` java
-Inicializa el array de laboratorios, para almacenar la informacíon obtenida se usan archivos JSON
+Inicializa el array de laboratorios y crear el archivo JSON
 
 public static Lab[] laboratorios = new Lab[11];
 
@@ -31,7 +32,7 @@ public static void iniciar()
 
 ##Recursos utilizados
 
-* Para el diseño de la aplicación se ha utilizado un Bootstrap Theme [Grayscale](https://blackrockdigital.github.io/startbootstrap-grayscale/).
+* Para el diseño de la aplicación se ha utilizado el Bootstrap Theme [Grayscale](https://blackrockdigital.github.io/startbootstrap-grayscale/).
 * Herramientas de programación: [Gradle](https://gradle.org/) en entorno [Eclipse](https://eclipse.org/).
 
 
@@ -54,12 +55,16 @@ Abrir la aplicación
 
 ##Contributors
 
-* Alberto Velazquez Alonso
-* Jonathan Sánchez Paredes
-* Kurosh Dabbagh Escalante
-* Lorena Jiménez Corta
-* Pablo Capa
+* Alberto Velazquez Alonso - [vlazq](https://github.com/velazq)
+* Jonathan Sánchez Paredes - [JoniSanchez](https://github.com/JoniSanchez)
+* Kurosh Dabbagh Escalante - [KuroshDa](https://github.com/KuroshDa)
+* Lorena Jiménez Corta     - [Kudaes](https://github.com/Kudaes)
+* Pablo Capa		   - [pabloCapa](https://github.com/pabloCapa)
 
 ##License
 
-A short snippet describing the license (MIT, Apache, etc.)
+MIT License  
+Copyright (c) 2016-2017 the APLAB developers  
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files.  
+More information in "LICENSE.txt" file
