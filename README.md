@@ -49,7 +49,7 @@ More information in "LICENSE.txt" file
 
 ##Media license
 
-All images and any other media files are under the [Creative Commons CC-BY license](https://creativecommons.org/licenses/by/3.0/).
+All images and any other media files are under the [Creative Commons CC-BY-NC-SA license](https://creativecommons.org/licenses/by-nc-sa/3.0/).
 
 ---
 
@@ -124,4 +124,4 @@ More information in "LICENSE.txt" file
 
 ##Licencia de imágenes
 
-Todas las imágenes y otros archivos están bajo la licencia [Creative Commons CC-BY](https://creativecommons.org/licenses/by/2.0/es/).
+Todas las imágenes y otros archivos están bajo la licencia [Creative Commons CC-BY-NC-SA](https://creativecommons.org/licenses/by-nc-sa/3.0/es/).
