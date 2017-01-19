@@ -27,9 +27,6 @@ dependencies {
     compile 'org.slf4j:slf4j-simple:1.7.22'
     compile 'com.sparkjava:spark-core:2.5.4'
     compile 'org.jsoup:jsoup:1.10.1'
-    compile 'com.sparkjava:spark-template-mustache:2.3'
-    
-    
     compile 'com.googlecode.json-simple:json-simple:1.1.1'
 
     // Declare the dependency for your favourite test framework you want to use in your tests.
