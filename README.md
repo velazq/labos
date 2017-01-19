@@ -37,13 +37,17 @@ The code is organized as a Gradle project for Eclipse.
 * Lorena Jiménez Corta     - [Kudaes](https://github.com/Kudaes)
 * Pablo Capa		   - [pabloCapa](https://github.com/pabloCapa)
 
-##License
+##Code license
 
 MIT License  
 Copyright (c) 2016-2017 the APLAB developers  
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files.  
 More information in "LICENSE.txt" file
+
+##Media license
+
+All images and any other media files are under the [Creative Commons CC-BY license](https://creativecommons.org/licenses/by/3.0/).
 
 ---
 
@@ -108,10 +112,14 @@ Proyecto Java haciendo uso de la herramienta Gradle.
 * Lorena Jiménez Corta     - [Kudaes](https://github.com/Kudaes)
 * Pablo Capa		   - [pabloCapa](https://github.com/pabloCapa)
 
-##Licencia
+##Licencia del código
 
 MIT License  
 Copyright (c) 2016-2017 the APLAB developers  
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files.  
 More information in "LICENSE.txt" file
+
+##Licencia de imágenes
+
+Todas las imágenes y otros archivos están bajo la licencia [Creative Commons CC-BY](https://creativecommons.org/licenses/by/2.0/es/).
