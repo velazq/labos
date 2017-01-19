@@ -1,5 +1,7 @@
 #APLAB
 
+[Versión en castellano](#castellano)
+
 ##Synopsis
 Last assignment for the "Ética, Legislación y Profesión" course (Ethics, Legislation and Professional Practice) at the Faculty of Computer Sciences (FDI), Complutense University of Madrid.
 APLAB lets you see the current availability of the Faculty laboratories, allowing you to filter by day, hour, subject and installed software.
@@ -14,7 +16,7 @@ To that end, it gathers data by scraping two existing pages,
 
 ##Motivation
 
-APLAB is a much-needed project for the FDI. Curently, the status information for our labs is scattered over several pages and it is really difficult for students to access it.
+APLAB is a much-needed project for the FDI. Currently, the status information for our labs is scattered over several pages and it is really difficult for students to access it.
 With APLAB, users can easily check the status of every lab just by selecting the lab number, day, hour or installed software.
 
 ##Getting the code
@@ -51,7 +53,7 @@ All images and any other media files are under the [Creative Commons CC-BY licen
 
 ---
 
-##Sinopsis
+##<a name="castellano"></a>Sinopsis
 Proyecto final de la asignatura Ética, Legislación y Profesión de la Facultad de Informática - UCM.  
 APLAB permite conocer la disponibilidad de los laboratorios de FDI realizando filtrados por dia, hora, asignatura y software disponible.  
 Para ello se recolecta datos mediante scraping de dos páginas webs de
