@@ -21,12 +21,12 @@ With APLAB, users can easily check the status of every lab just by selecting the
 
 The code is organized as a Gradle project for Eclipse.
 
-**Installation on Eclipse.**
+**Open project with Eclipse**
 * Clone repo.
 * File -> Import -> Gradle Project
 * On src/main/java/Main.java -> Right click -> Run As Java Application
 
-Viewing the app
+**View the app**
 * Open a web browser, visit "localhost:4567"
 
 ##Participants
@@ -92,12 +92,12 @@ Con APLAB los usuarios tienen una gran facilidad para consultar el estado de los
 
 Proyecto Java haciendo uso de la herramienta Gradle.
 
-**Instalación en Eclipse.**
+**Instalación en Eclipse**
 * Descargar respositorio.
 * File -> Import -> Gradle Project
 * En src/main/java/Main.java -> Click derecho -> Run As Java Application
 
-Abrir la aplicación
+**Abrir la aplicación**
 * Ir a un navegador y consultar "localhost:4567"
 
 ##Participantes
