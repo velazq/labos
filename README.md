@@ -1,13 +1,60 @@
 #APLAB
 
+##Synopsis
+Last assignment for the "Ética, Legislación y Profesión" course (Ethics, Legislation and Professional Practice) at the Faculty of Computer Sciences (FDI), Complutense University of Madrid.
+APLAB lets you see the current availability of the Faculty laboratories, allowing you to filter by day, hour, subject and installed software.
+To that end, it gathers data by scraping two existing pages,
+[status](https://web.fdi.ucm.es/labs/estado_lab.asp) and [time table](https://web.fdi.ucm.es/Docencia/Horarios.aspx?AulaLab_Cod=%s&fdicurso=%s).
+
+##Resources used
+
+* For the design, we used HTML, CSS and JavaScript along with the Bootstrap Theme template [Grayscale](https://blackrockdigital.github.io/startbootstrap-grayscale/).
+* Dev tools: [Gradle](https://gradle.org/), [Spark Framework](http://sparkjava.com/) and Java with [Eclipse](https://eclipse.org/).
+
+
+##Motivation
+
+APLAB is a much-needed project for the FDI. Curently, the status information for our labs is scattered over several pages and it is really difficult for students to access it.
+With APLAB, users can easily check the status of every lab just by selecting the lab number, day, hour or installed software.
+
+##Getting the code
+
+The code is organized as a Gradle project for Eclipse.
+
+**Installation on Eclipse.**
+* Clone repo.
+* File -> Import -> Gradle Project
+* On src/main/java/Main.java -> Right click -> Run As Java Application
+
+Viewing the app
+* Open a web browser, visit "localhost:4567"
+
+##Participants
+
+* Alberto Velazquez Alonso - [velazq](https://github.com/velazq)
+* Jonathan Sánchez Paredes - [JoniSanchez](https://github.com/JoniSanchez)
+* Kurosh Dabbagh Escalante - [KuroshDa](https://github.com/KuroshDa)
+* Lorena Jiménez Corta     - [Kudaes](https://github.com/Kudaes)
+* Pablo Capa		   - [pabloCapa](https://github.com/pabloCapa)
+
+##License
+
+MIT License  
+Copyright (c) 2016-2017 the APLAB developers  
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files.  
+More information in "LICENSE.txt" file
+
+---
+
 ##Sinopsis
 Proyecto final de la asignatura Ética, Legislación y Profesión de la Facultad de Informática - UCM.  
 APLAB permite conocer la disponibilidad de los laboratorios de FDI realizando filtrados por dia, hora, asignatura y software disponible.  
-Para ello se recolecta datos mediante scraping de dos páginas webs de 
+Para ello se recolecta datos mediante scraping de dos páginas webs de
 [estado](https://web.fdi.ucm.es/labs/estado_lab.asp) y [horarios](https://web.fdi.ucm.es/Docencia/Horarios.aspx?AulaLab_Cod=%s&fdicurso=%s)
 de los laboratorios.
 
-##Ejemplo de c´dogio
+##Ejemplo de código
 
 Se hace uso de scraping para recolectar la información y de archivo JSON para almancenarla.
 
@@ -33,7 +80,7 @@ public static void iniciar()
 ##Recursos utilizados
 
 * Para el diseño de la aplicación se ha utilizado html, css y javascript sobre una plantilla de Bootstrap Theme [Grayscale](https://blackrockdigital.github.io/startbootstrap-grayscale/).
-* Herramientas de programación: [Gradle](https://gradle.org/), Spark y Java en entorno [Eclipse](https://eclipse.org/).
+* Herramientas de programación: [Gradle](https://gradle.org/), [Spark Framework](http://sparkjava.com/) y Java en entorno [Eclipse](https://eclipse.org/).
 
 
 ##Motivación
@@ -48,14 +95,14 @@ Proyecto Java haciendo uso de la herramienta Gradle.
 **Instalación en Eclipse.**
 * Descargar respositorio.
 * File -> Import -> Gradle Project
-* En src/main/java/Main.java -> Click Drch -> Rus As Java Aplication
+* En src/main/java/Main.java -> Click derecho -> Run As Java Application
 
 Abrir la aplicación
 * Ir a un navegador y consultar "localhost:4567"
 
 ##Participantes
 
-* Alberto Velazquez Alonso - [vlazq](https://github.com/velazq)
+* Alberto Velazquez Alonso - [velazq](https://github.com/velazq)
 * Jonathan Sánchez Paredes - [JoniSanchez](https://github.com/JoniSanchez)
 * Kurosh Dabbagh Escalante - [KuroshDa](https://github.com/KuroshDa)
 * Lorena Jiménez Corta     - [Kudaes](https://github.com/Kudaes)
