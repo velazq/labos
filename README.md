@@ -22,12 +22,12 @@ With APLAB, users can easily check the status of every lab just by selecting the
 The code is organized as a Gradle project for Eclipse.
 
 **Open project with Eclipse**
-* Clone repo.
+* Clone repo
 * File -> Import -> Gradle Project
 * On src/main/java/Main.java -> Right click -> Run As Java Application
 
 **View the app**
-* Open a web browser, visit "localhost:4567"
+* Open a web browser, then visit "localhost:4567"
 
 ##Participants
 
